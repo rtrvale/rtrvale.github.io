@@ -1,0 +1,49 @@
+* {
+  font-family:Verdana;
+ }
+
+.table {
+  margin: 0 auto;
+  width:550px;
+}
+
+.row {
+  margin: 0 auto;
+  width:550px;
+}
+
+.tableData {
+  display: block;
+  float:left; 
+  width:100px; 
+  height:100px; 
+  border:0px solid; 
+  margin:20px;
+  padding: 10px;
+  background-color:#7ec0ee;
+}
+
+.Data {
+/*  visibility : hidden; */
+  display : none;
+  width : auto;
+  margin:0px;
+}
+
+.newRow {
+  clear:left;
+}
+
+.frontMatter {
+  display : none;
+}
+
+#h2Parent {
+  text-align: center;
+  display: none;
+}
+
+#Project1 {
+  background-image: url(ash_word_cloud.bmp);
+  background-position : center;
+} 
