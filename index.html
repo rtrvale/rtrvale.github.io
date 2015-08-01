@@ -4,19 +4,19 @@
 
 <script type="text/javascript">
 
-var projectLinks = {"Project1" : "http://www.google.com"};
+var projectLinks = {"tax" : "Talks/EvasionModel.pdf"};
 
 var changeStyle = function(){
   var style = document.getElementById("pageStyle").getAttribute('href');
-  if (style == "stylesheet1.css"){
-    style = "stylesheet2.css";
+  if (style == "CSS/stylesheet1.css"){
+    style = "CSS/stylesheet2.css";
 	document.getElementById("flipper").innerHTML = "Click here to change to fancy version";
     for (key in projectLinks){
 	  document.getElementById(key).href = "";
 	}
   }
   else {
-    style = "stylesheet1.css";
+    style = "CSS/stylesheet1.css";
 	document.getElementById("flipper").innerHTML = "Click here to go back to normal view";
 	for (key in projectLinks){
 	  document.getElementById(key).href = projectLinks[key];
@@ -27,7 +27,7 @@ var changeStyle = function(){
 
 </script>
 
-<link id="pageStyle"  type="text/css" rel="stylesheet" href="stylesheet2.css" />
+<link id="pageStyle"  type="text/css" rel="stylesheet" href="CSS/stylesheet2.css" />
 </head>
 
 <body>
@@ -65,14 +65,14 @@ var changeStyle = function(){
  <!-- table of divs -->
  <div class="table">
   <div class="row">
-   <a class="tableData" id="Project1" target="new">
+   <a class="tableData" id="tax" target="new">
     <div class="Data">
 	I wrote a paper <a href="http://papers.ssrn.com/sol3/papers.cfm?abstract_id=2601214">A Model for Tax Evasion with some
     Realistic Properties</a>. I gave a talk on this paper at the Massey University Applied Mathematics Seminar in Palmerston
     North on April 30 2015.
 	 <ul>
 	  <li><a href="http://papers.ssrn.com/sol3/papers.cfm?abstract_id=2601214">Link to paper at SSRN</a>
-	  <li><a href="">Slides (pdf).</a>
+	  <li><a href="Talks/EvasionModel.pdf">Slides (pdf).</a>
 	 </ul>
 	</div>
    </a>
