@@ -43,7 +43,12 @@
   display: none;
 }
 
-#Project1 {
+#tax {
   background-image: url(ash_word_cloud.bmp);
+  background-position : center;
+} 
+
+#networkImputation {
+  background-image: url(Pictures/fake_network.png);
   background-position : center;
 } 
