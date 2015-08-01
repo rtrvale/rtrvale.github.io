@@ -49,6 +49,6 @@
 } 
 
 #networkImputation {
-  background-image: url(Pictures/fake_network.png);
+  background-image: url("../Pictures/fake_network.png");
   background-position : center;
 } 
