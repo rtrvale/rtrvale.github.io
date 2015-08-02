@@ -1,0 +1,156 @@
+
+<html>
+<head>
+<link rel="image_src" href="../Pictures/posteriors_1.png">
+<title>Bayes of Thrones</title>
+<meta name="description" content="Can we predict The Winds of Winter using a Bayesian hierarchical model?
+ Perhaps not. But we can try!" />
+<div align=center font-size:xx-large>
+<h1>Bayes of Thrones</h1>
+</div>
+</head>
+<body>
+<div>
+<p>
+<a href="../Index.html">Back to homepage.</a>
+</p>
+</div>
+
+<div>
+<p>
+<b>What's this? You are claiming that we can use Bayesian statistics to predict <i>Game of Thrones</i>?</b>
+<br>
+Probably not, no.
+</p>
+
+<p>
+<b>But we can try?</b>
+<br>
+Yes!
+</p>
+
+<p>
+<b>Explain how.</b>
+<br>
+We have a matrix showing how many chapters in each of the existing novels was narrated from the point of view of each character, and we can fit
+a statistical model to that, and try to use the model to predict how many chapters will be told from the point of view of each character in 
+future novels. 
+
+<p>
+<b>What's the model?</b>
+<br>
+It's a hierarchical model. The number of point-of-view chapters for each character follows a Poisson distribution between certain times, and those
+times themselves follow a different underlying distribution. To put it more simply, the number of each character's point-of-view chapters
+fluctuates randomly around a certain level, unless the character hasn't appeared yet or has ceased to appear.
+</p>
+
+<p>
+<b>So, to put it more simply, the model is: "predict that the character will have about the same number of chapters as they had in the last book,
+unless they are dead." What's so impressive about that?</b>
+<br>
+The advantage of using a statistical model is that we can say how uncertain we are about our prediction. For example, anybody could predict that
+when a die is rolled, it might be a three. The kind of prediction we want to make is something like: "it has a one in six chance of being a three"
+or even better, "it has a one in six chance of being any of the values between one and six." By <it>prediction</it> in this sense, we mean giving 
+a probability distribution describing the probability of all the different possible numbers of point-of-view chapters.
+</p> 
+
+<p>
+<b>I see, a bit like a bookmaker might do for a horse race?</b>
+<br>
+Yes, exactly.
+</p>
+
+<p>
+<b>So you could use the model as a guide for betting?</b>
+<br>
+That would be very unwise, because the model does not take events in the books into account at all. Its only input is the number of point-of-view
+chapters for each character. To get the most accurate predictions, you might combine the output of a model with common-sense
+predictions made by fans of the books.
+</p>
+
+<p>
+<b>That's a bit disappointing. I thought predictive modelling was all about big data sets, text mining, sentiment analysis,
+support vector machines and that 
+sort of thing?</b>
+<br>
+Absolutely, all that stuff is very useful. But the aim of this particular project is to see how well we can do at making probabilistic
+predictions from a very small data set.
+</p>
+
+<p>
+<b>How can you measure the model's performance?</b>
+<br>
+It won't be possible until <i>The Winds of Winter</i> is published, but we can check via simulation that the model is fitted correctly and we
+can make a tentative attempt at validation by seeing how it would have predicted earlier novels in the series.
+</p>
+
+<p>
+<b>Can I see the model's predictions?</b>
+<br>
+Yes, the posterior predictive distributions for the characters are shown below,
+but since this would give away <font color="red"><b>major spoilers</b></font> for all five of the existing books, you can reach them
+by clicking the following thumbnails (they are in png format.)
+</div>
+<div display: table; margin: 0 auto;>
+<a href="../Pictures/posteriors_1.png", target=new><img src="../Pictures/posteriors_1.png", width=50 /></a>
+<a href="../Pictures/posteriors_2.png", target=new><img src="../Pictures/posteriors_2.png", width=50 /></a>
+</div>
+</p>
+
+<p>
+<b><i>[Asked by a mathematician friend]</i> I don't see how you can treat the number of point-of-view chapters as random since it completely
+depends on the whim of George R. R. Martin, the author of the books.</b>
+<br>
+Randomness is a way of expressing our ignorance about an event rather than a statement about the process which underlies it. For example, if we
+know the exact physcial conditions under which a coin is flipped, it is possible to calculate which way up it will land, so in this sense a coin
+flip is not random either. Using probability is one way of expressing the fact that we are ignorant of those conditions.
+</p>
+
+<p>
+<b>This all seems rather frivolous. Is there a serious side to this work?</b>
+<br>
+I believe that statisticians ought to be more willing to test
+their models by making predictions about things that haven't happened yet. It is often said that models can be used either for explanation or 
+prediction, where "explanation" means that the chosen model could plausibly have generated the observed data.
+There are many examples of models which predict well but do not explain. It also makes sense that
+it might be a good idea to trade off some predictive ability in exchange for a model which is easier to understand and analyse.
+But I cannot currently see how a model which "explains" but does not predict is any better than superstition.
+</p>
+
+<p>
+<b>But your criterion for choosing the model was that it could have generated the observed data.
+So you're saying that if the model's predictions are no good then it's the fault of statistics?</b>
+<br>
+Not necessarily. It could be that it is a poor choice of model and some other model would do better.
+</p>
+
+<p>
+<b>Where can I get more details and further predictions?</b>
+<br>
+In <a href="../Papers/got_290814.pdf">this paper (pdf)</a> Section 1 of the paper is intended to be accessible to a general audience. The paper also contains
+<b><font color="red">spoilers</font></b> for all five of the existing books.
+</p>
+
+<p>
+<b>I am sceptical or curious. Can I see the code?</b>
+<br>
+It is written in <a href="http://www.r-project.org/">R</a><br>
+<a href="got.txt", target=new>got.txt</a> data in text format<br>
+<a href="got_readin.R", target=new>got_readin.R</a> R script to read in the data<br>
+<a href="fit_model12.R", target=new>fit_model12.R</a> main model-fitting script<br>
+<a href="simulate_model12.R", target=new>simulate_model12.R</a> simulation from model<br>
+<a href="plotting_for_model12.R", target=new>plotting_for_model12.R</a> makes the plots in the paper<br>
+<a href="inference_test_model12.R", target=new>inference_test_model12.R</a> tests the Gibbs sampler<br>
+<a href="reproducible_master_script.R", target=new>reproducible_master_script.R</a> produces the plots in the paper (takes a few hours to run.) The 
+<a href="http://cran.r-project.org/web/packages/truncnorm/index.html">truncnorm package</a> must be installed 
+in order to get exactly the same figures as in the paper.
+<br>
+<a href="model_12_scripts.zip">model_12_scripts.zip</a> zip file containing all the above scripts
+</p>
+
+
+</div>
+
+
+</body>
+</html>

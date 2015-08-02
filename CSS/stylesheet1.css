@@ -52,3 +52,15 @@
   background-image: url("../Pictures/fake_network.png");
   background-position : center;
 } 
+
+#GOT {
+  background-image: url("../Pictures/posteriors_2.png");
+  background-position : center;
+  background-size : 90%;
+}
+
+#GOTvideo {
+  background-image: url("../Pictures/posteriors_2.png");
+  background-position : center;
+  background-size : 90%;
+}
