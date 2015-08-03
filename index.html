@@ -7,13 +7,19 @@
 var projectLinks = {"tax" : "Talks/EvasionModel.pdf",
                     "networkImputation" : "Talks/network_imputation.pdf",
 					"GOT" : "pages/bayesofthrones.html",
-					"GOTvideo" : "http://www.youtube.com/watch?v=5dGBjjWaGTw&index=1&list=PL1D0DE06F56864BA4"};
+					"GOTvideo" : "http://www.youtube.com/watch?v=5dGBjjWaGTw&index=1&list=PL1D0DE06F56864BA4",
+					"whales" : "Talks/Mta2014.pdf",
+					"copulas" : "Talks/MBIE_tutorial.pdf",
+					"put" : "pages/put.html",
+					"IB" : "pages/IBpages.html",
+					"wordCloud" : "pages/wordcloud2.html"};
 
 var changeStyle = function(){
   var style = document.getElementById("pageStyle").getAttribute('href');
   if (style == "CSS/stylesheet1.css"){
     style = "CSS/stylesheet2.css";
 	document.getElementById("flipper").innerHTML = "Click here to change to fancy version";
+	document.getElementById("flipper").style.display = "inline";
     for (key in projectLinks){
 	  document.getElementById(key).href = "";
 	}
@@ -21,6 +27,7 @@ var changeStyle = function(){
   else {
     style = "CSS/stylesheet1.css";
 	document.getElementById("flipper").innerHTML = "Click here to go back to normal view";
+	document.getElementById("flipper").style.display = "block";
 	for (key in projectLinks){
 	  document.getElementById(key).href = projectLinks[key];
 	}
@@ -30,6 +37,7 @@ var changeStyle = function(){
 
 </script>
 
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
 <link id="pageStyle"  type="text/css" rel="stylesheet" href="CSS/stylesheet2.css" />
 </head>
 
@@ -58,7 +66,12 @@ var changeStyle = function(){
  </h3>
 </div>
 
- <button id="flipper" onclick="changeStyle();" style="cursor:pointer; border:0px; font-family:Verdana;">Click here to change to fancy version</button>
+<div class="row">
+ <button id="flipper" onclick="changeStyle();" 
+ style="cursor:pointer; margin:0 auto; width:300px;
+ border:0px; font-family:Verdana;">
+ Click here to change to fancy version</button>
+</div>
 
 <div class="frontMatter"> 
  <h4>
@@ -79,6 +92,9 @@ var changeStyle = function(){
 	 </ul>
 	</div>
    </a>
+   
+   <hr>
+   
    <a class="tableData" id="networkImputation" target="new">
     <div class="Data">
 	 I attended the <a href="https://secure.orsnz.org.nz/conf48/">joint NZSA/ORSNZ conference</a> in November 2014 and presented a discussion of a
@@ -89,6 +105,9 @@ var changeStyle = function(){
 	 </ul>	 
 	</div>
    </a>
+   
+   <hr>
+   
    <a class="tableData" id="GOT" target="new">
      <div class="Data">
 	 In September-October 2014, I worked on Bayesian modelling of 
@@ -98,7 +117,7 @@ var changeStyle = function(){
 	 of the books (if you haven't read them, click with caution.)
 	 </div>
    </a>
-  </div>
+  </div>  
   <div class="row">
    <a class="tableData newRow" id="GOTvideo" target="new">
      <div class="Data">
@@ -107,7 +126,8 @@ var changeStyle = function(){
 	  <i>What if... we could predict Game of Thrones?</i> from the UC <i>What if Wednesdays</i>
 	  series, 8 October 2014.
 	  <li><a href="Talks/rv_81014.pdf">Slides (pdf)</a> from the lecture.
-	  <li><a href="Papers/Game_of_Thrones_article.pdf">Article</a> from 
+	  <li><a href="Papers/Game_of_Thrones_article.pdf"><i>Who lives and who dies in the </i>Game
+	  of Thrones? (pdf)</a> from 
 	  <a href="http://www.statslife.org.uk/significance"><i>Significance</i></a>, the magazine of the Royal Statistical
 	  Society, December 2014.
 	  <li><a href="http://www.huffingtonpost.com/richard-vale/can-statistics-predict-ga_b_5956590.html">
@@ -115,20 +135,80 @@ var changeStyle = function(){
 	 </ul>
 	 </div>
    </a>
-   <div class="tableData"></div>
+   
+   <hr>
+   
+   <a class="tableData" id="whales" target="new">
+     <div class="Data">
+	 In 2013-14 I worked with 
+	 <a href="https://www.stat.auckland.ac.nz/showperson?firstname=Rachel&surname=Fewster">Rachel Fewster</a> 
+	 on capture-recpature models with applications to whales. 
+     <ul>
+	   <li> Vale, R.T.R., Fewster, R.M., Carroll, E.L., and Patenaude, N.J. Maximum likelihood inference for model Mt,a for capture-recapture data with 
+misidentification. <i>Biometrics</i>, 2014. <a href="https://www.stat.auckland.ac.nz/~fewster/Vale_et_al_Mtalpha.pdf">Full text (PDF)</a>
+ and <a href="https://www.stat.auckland.ac.nz/~fewster/Vale_et_al_Mtalpha_Web_Appendix.pdf">Web Appendix.</a>
+       <li> <a href="Talks/Mta2014.pdf">Slides (pdf)</a> from a talk at CREEM, St. Andrews, July 2014.
+	   <li> <a href="Talks/Mta.pdf">Slides (pdf)</a> from a short version of the same talk.
+     </ul>	 
+	 </div>
+   </a>
+   
+   <hr>
+   
+   <a class="tableData" id="copulas" target="new">
+     <div class="Data">
+   In Febraury 2014 I gave a seminar at <a href="http://www.mbie.govt.nz/">The Ministry of Business, Innovation and Employment</a> 
+   on copula methods and interactive statistical graphics using Javascript and Canvas.
+       <ul>
+         <li><a href="Talks/MBIE_tutorial.pdf">Tutorial</a> on making an animated time series in html. Aimed at those with R experience.
+         <li><a href="Papers/nzsaorsnz2013_submission_17.pdf">Paper</a> from the 2013 NZSA/ORSNZ conference.
+	   </ul>
+     </div>
+   </a>
    
 <div class="frontMatter">
  <h4>
  Other
  </h4>
 </div>
-   
-   <div class="tableData"></div>
   </div>
   <div class="row">
-   <div class="tableData newRow"></div>
-   <div class="tableData"></div>
-   <div class="tableData"></div>
+    <a class="tableData newRow" id="wordCloud" target="new">
+     <div class="Data">
+      Recently I made an experimental word cloud from the text of <i>The Adventures of Sherlock
+      Holmes</i>.
+      <ul>
+        <li><a href="pages/wordcloud2.html">The finished product</a>
+		<li><a href="">The code</a>
+      </ul>
+     </div>      
+   </a>
+   
+   <hr>
+   
+   <a class="tableData" id="put" target="new">
+     <div class="Data">
+	   In 2011 I wrote a Javascript app which plays the 17th century card game Put. 
+	   For more information about the game, 
+	   see the <a href="http://www.pagat.com/put/put.html">Put page at pagat.com.</a>
+	   <ul>
+	     <li><a href="pages/put.html">Play Put against the computer</a>
+	   </ul>
+	 </div>
+   </a>
+   <div class="Data">
+  
+   </div>
+   
+   <hr>
+   
+   <a class="tableData" id="IB" target="new">
+     <div class="Data">
+       From 2003 - '05, the <a href="pages/IBpages.html">Inspector Bloodhound Pages</a> 
+	   are a collection of puzzles which used to be on my website at Glasgow University.	 
+	 </div>
+   </a>
+   
   </div>
  </div>
 </body>

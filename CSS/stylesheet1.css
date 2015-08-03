@@ -1,6 +1,10 @@
-* {
+/* {
   font-family:Verdana;
- }
+ }*/
+ 
+body {
+  font-family : Gill Sans MT, Arial, sans-serif;
+}
 
 .table {
   margin: 0 auto;
@@ -38,14 +42,19 @@
   display : none;
 }
 
+hr {
+  display : none;
+}
+
 #h2Parent {
   text-align: center;
   display: none;
 }
 
 #tax {
-  background-image: url(ash_word_cloud.bmp);
-  background-position : center;
+  background-image: url("../Pictures/evaders_vs_tau_ising.png");
+  background-position : center bottom;
+  background-size : 300%;
 } 
 
 #networkImputation {
@@ -54,13 +63,44 @@
 } 
 
 #GOT {
-  background-image: url("../Pictures/posteriors_2.png");
-  background-position : center;
-  background-size : 90%;
-}
+  background-image: url("../Pictures/prob0.png");
+  background-position : center bottom;
+  background-size : 500%;
+ }
 
 #GOTvideo {
-  background-image: url("../Pictures/posteriors_2.png");
+  background-image: url("../Pictures/tortoise_slide.png");
+  background-position : center left;
+  background-size : 300%;
+}
+
+#whales {
+  background-image: url("../Pictures/whale.png");
   background-position : center;
-  background-size : 90%;
+  background-size : 105%;
+}
+
+#copulas {
+  background-image: url("../Pictures/spiral.png");
+  background-position : center;
+  background-size : 120%;
+}
+
+#put {
+  background-image : url("../Pictures/cards.png");
+  background-position : center;
+  background-size : 101%;
+}
+
+#wordCloud {
+  background-image : url("../Pictures/wordCloud.png");
+  background-position : center;
+  background-size : 200%;
+}
+
+#IB {
+  background-image : url("../Pictures/invspector.png");
+  background-position : center;
+  background-size : 140%;
+  background-repeat : no-repeat;
 }

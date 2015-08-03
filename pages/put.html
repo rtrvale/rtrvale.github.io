@@ -1,0 +1,816 @@
+
+<html>
+<head>
+
+<title>Put</title>
+<meta name="description" content="Play Put in your browser against the computer">
+<meta name="keywords" content="put, compleat gamester">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
+
+<script type="text/javascript">
+
+var yourOverallScore = 0;
+var myOverallScore = 0;
+
+var i_putted = false;	// have i putted?
+var you_putted = false;	// have you putted?
+var putted = false; 	// has someone putted?
+var resigned = false;	// has player resigned?
+var Iresigned = false;
+
+var yourGameScore = 0;	// score in the current game
+var myGameScore = 0;
+
+var yourTricks = 0;	// number of tricks won in current hand
+var myTricks = 0;
+var tricksPlayedThisHand = 0;
+
+var yourLead = true;	// is it the player's turn to lead
+			// (slash) did player lead to this trick?
+var myLead = false;
+
+var yourHand = new Array();
+var myHand = new Array();
+
+var Names=["4","5","6","7","8","9","10","J","Q","K","A","2","3"];
+var Suits=["&#9827","&#9830","&#9829","&#9824"];
+
+var cardOnTheTable = 0;
+var cardsYouHavePlayed = [false,false,false];	// which cards have you played yet?
+var lastCardLedByMe = -1;
+
+var handsWonByMe = 10;
+var totalHands = 0;
+
+function dealCard(pack)
+{// delete and return random element of array
+
+position = Math.floor(Math.random()*pack.length);
+x = pack.splice(position, 1);
+return x;
+}
+
+function writeCard(card, place)
+{// print short card name in html element with id place
+
+document.getElementById(place).innerHTML += Names[card%13];
+if (card%4==0 || card%4==3){
+document.getElementById(place).innerHTML += Suits[card%4];}
+else{
+document.getElementById(place).innerHTML += Suits[card%4].fontcolor("red");}
+}
+
+function init()	// player clicked the deal button
+{
+myTricks = 0;
+yourTricks = 0;
+i_putted = false;
+you_putted = false;
+putted = false;
+cardsYouHavePlayed = [false,false,false];
+tricksPlayedThisHand = 0;
+resigned = false;
+Iresigned = false;
+
+document.getElementById("myHandScoreBox").innerHTML = myTricks;
+document.getElementById("yourHandScoreBox").innerHTML = yourTricks;
+document.getElementById("myGameScoreBox").innerHTML = myGameScore;
+document.getElementById("yourGameScoreBox").innerHTML = yourGameScore;
+document.getElementById("myOverallScoreBox").innerHTML = myOverallScore;
+document.getElementById("yourOverallScoreBox").innerHTML = yourOverallScore;
+
+for (i=0;i<3;i++)
+{
+	document.getElementById("compbtn"+i).innerHTML = "";
+	document.getElementById("compbtn"+i).style.backgroundColor= "green";
+	document.getElementById("playField"+i).innerHTML = "";
+	document.getElementById("btn"+i).innerHTML = "";
+}
+document.getElementById("statusline1").innerHTML = "";
+
+myHand = [];
+yourHand = [];
+
+var pack = new Array();
+
+for (i=0;i<=51;i++)
+{
+pack.push(i);
+}
+
+for (i=0;i<3;i++)
+{
+card = dealCard(pack);
+myHand.push(card);
+card = dealCard(pack);
+yourHand.push(card);
+}
+
+for (i=0;i<3;i++){writeCard(yourHand[i], "btn"+i);}
+
+document.getElementById("dealbtn").disabled = true;
+document.getElementById("btn0").disabled = false;
+document.getElementById("btn1").disabled = false;
+document.getElementById("btn2").disabled = false;
+document.getElementById("putbtn").disabled = false;
+document.getElementById("resignbtn").disabled = false;
+document.getElementById("statusline2").innerHTML = "New hand dealt";
+document.getElementById("statusline1").innerHTML = "Trick 1: ".fontcolor("blue");
+
+
+if ( (totalHands%2) == 0)
+{
+yourLead = true;
+myLead = false;
+document.getElementById("statusline1").innerHTML += "Your lead. ";
+}
+else{
+myLead = true;
+yourLead = false;
+}
+if (myLead == true)
+{leadCard();}	//	computer needs to play a card or put
+
+return 0;
+}
+
+function playCard(i)	// player clicked on an unplayed card (number i)
+{
+// move your card to the centre column
+
+var yourCard = yourHand[i];
+document.getElementById("btn"+i).disabled = true;
+document.getElementById("btn"+i).innerHTML = "";
+cardsYouHavePlayed[i] = true;
+cardOnTable = yourCard;
+writeCard(yourCard, "playField"+tricksPlayedThisHand);
+
+document.getElementById("statusline1").innerHTML += " You play ";
+writeCard(yourCard, "statusline1");
+document.getElementById("statusline1").innerHTML += ". ";
+
+
+if ((myLead == true) && (lastCardLedByMe != -1)){
+resolveTrick(yourCard, lastCardLedByMe);
+}
+else{if (yourLead == true){reactToLead(yourCard);}}
+}
+
+function resolveTrick(yourCard, myCard)	
+{// decide who won the trick and take appropriate action
+
+tricksPlayedThisHand += 1;
+
+if (yourCard%13 > myCard%13)
+{
+document.getElementById("statusline1").innerHTML += " You win the trick. ";
+yourTricks += 1;
+yourLead = true;
+myLead = false;
+}
+if (yourCard%13 < myCard%13)
+{
+document.getElementById("statusline1").innerHTML += " I win the trick. ";
+myTricks += 1;
+yourLead = false;
+myLead = true;
+}
+if (yourCard%13 == myCard%13)
+{
+document.getElementById("statusline1").innerHTML += " The trick is tied. ";
+}
+document.getElementById("yourHandScoreBox").innerHTML = yourTricks;
+document.getElementById("myHandScoreBox").innerHTML = myTricks;
+
+if (tricksPlayedThisHand == 3)
+{
+endHand();
+}
+else{
+var t = (tricksPlayedThisHand + 1) + "";
+document.getElementById("statusline1").innerHTML += "Trick ".fontcolor("blue");
+document.getElementById("statusline1").innerHTML += (t+": ").fontcolor("blue");
+if (myLead == true){leadCard();}
+if (yourLead == true)
+{document.getElementById("statusline1").innerHTML += "Your lead. ";}
+}
+}
+
+function endHand()	// calculate score and clean up
+{
+totalHands += 1;
+
+if ((yourTricks == myTricks) && ((resigned == false) && (Iresigned==false)))
+{
+document.getElementById("statusline1").innerHTML += "The hand is a draw. ";
+}
+if (((yourTricks > myTricks) && (resigned == false))||(Iresigned==true))
+{yourGameScore += 1;
+document.getElementById("statusline1").innerHTML +="You win the hand. ";
+	if (yourGameScore >= 5 || putted == true)
+	{
+	yourOverallScore += 1;
+	document.getElementById("statusline1").innerHTML +="You win the game. ";
+	}
+}
+if (((myTricks > yourTricks) && (Iresigned==false)) || (resigned == true))
+{
+myGameScore += 1;
+handsWonByMe += 1;
+document.getElementById("statusline1").innerHTML += "I win the hand. ";
+	if (myGameScore >= 5 || (putted==true && resigned == false)) // not allowed to res after
+																 // accepting put
+	{
+	myOverallScore += 1;
+	document.getElementById("statusline1").innerHTML +="I win the game.";
+	}
+}
+
+
+//document.getElementById("myGameScoreBox").innerHTML= myGameScore;
+//document.getElementById("yourGameScoreBox").innerHTML= yourGameScore;
+
+if (yourGameScore >=5 || myGameScore >= 5 || (putted==true && yourTricks != myTricks &&
+ Iresigned == false && resigned == false) )
+{yourGameScore=0;myGameScore=0;}
+else
+{
+document.getElementById("statusline1").innerHTML += "Score in current game is now ";
+document.getElementById("statusline1").innerHTML += yourGameScore +"-"+myGameScore+".";
+}
+
+//document.getElementById("myOverallScoreBox").innerHTML= myOverallScore;
+//document.getElementById("yourOverallScoreBox").innerHTML= yourOverallScore;
+document.getElementById("dealbtn").disabled = false;
+document.getElementById("putbtn").disabled = true;
+document.getElementById("resignbtn").disabled = true;
+document.getElementById("playonbtn").disabled = true;
+for (i=0;i<3;i++)
+{
+	document.getElementById("btn"+i).disabled = true;
+}
+
+}
+
+function reactToLead(yourCard)	// react to the card led by the player
+{
+if ((shouldIPutInResponse(yourCard)==true) && (putted==false))
+{
+document.getElementById("statusline1").innerHTML += "I put. ";
+document.getElementById("putbtn").disabled=true;
+document.getElementById("playonbtn").disabled=false;
+document.getElementById("resignbtn").disabled=false;
+for (i=0;i<3;i++){document.getElementById("btn"+i).disabled = true;}
+i_putted = true;
+putted = true;
+
+return -1;	// flags that no card was returned by this function
+}
+
+var choice = chooseCardInResponse(yourCard);
+
+var myCard = myHand.splice(choice, 1);
+writeCard(myCard, "compbtn"+ tricksPlayedThisHand);
+document.getElementById("compbtn"+ tricksPlayedThisHand).style.backgroundColor = "";
+
+document.getElementById("statusline1").innerHTML += "I play ";
+writeCard(myCard, "statusline1");
+document.getElementById("statusline1").innerHTML += ". ";
+
+resolveTrick(yourCard, myCard);
+}
+
+function shouldIPutInResponse(yourCard)
+{
+if ((3-tricksPlayedThisHand + myTricks)<= yourTricks){return false;}
+if (myGameScore == 4){return false;}
+if (yourTricks >= 2){return false;}
+
+var best = myHand[0];
+var worst = myHand[0];
+var bestIndex = 0;
+var worstIndex = 0;
+var pWinThisHand = 0;
+
+var myVirtualTricks = myTricks;
+var yourVirtualTricks = yourTricks;
+var myVirtualHand = new Array();
+
+for (i=0;i<myHand.length;i++){myVirtualHand[i]=myHand[i];}
+
+for (i=0;i<myHand.length;i++)
+{
+if (myHand[i]%13 > yourCard%13)
+{best = myHand[i]; bestIndex = i;}
+if (myHand[i]%13 < worst%13)
+{worst = myHand[i]; worstIndex = i;}
+}
+if (best%13 > yourCard%13)	// I can win the trick
+{
+for (i=0;i<myHand.length;i++)
+{
+if ((myHand[i]%13 > yourCard%13)&&(myHand[i]%13 <= best%13))
+{best = myHand[i]; bestIndex = i;}
+}
+myVirtualTricks += 1; 
+myVirtualHand.splice(bestIndex, 1);
+}
+else
+{
+yourVirtualTricks += 1; 
+myVirtualHand.splice(worstIndex, 1); 
+}
+
+if ((2-tricksPlayedThisHand + myTricks)<= yourVirtualTricks){return false;}
+
+var vprobs = new Array();
+
+for (i=0;i<myVirtualHand.length;i++)
+{
+vprobs[i] = (myVirtualHand[i]%13)/(12.0);
+}
+
+if (yourVirtualTricks >= 2){return false;}
+
+if (myVirtualHand.length == 2)
+{
+if (yourVirtualTricks == 1){pWinThisHand = vprobs[0]*vprobs[1];}
+else{pWinThisHand = vprobs[0]*(1-vprobs[1])+vprobs[1]*(1-vprobs[0])+vprobs[0]*vprobs[1];}
+}
+if (myVirtualHand.length == 1)
+{
+if (yourVirtualTricks >= 2){pWinThisHand = 0;}
+else{pWinThisHand = vprobs[0];}
+}
+if (myVirtualHand.length == 0)
+{
+if (myVirtualTricks >= yourVirtualTricks){pWinThisHand = 1;}
+else{pWinThisHand = 0;}
+}
+
+var pWinGameIfResign = simulate(yourGameScore+1,myGameScore);
+if (pWinThisHand > pWinGameIfResign){return true;}
+
+return false;	// for now
+}
+
+function leadCard()	
+{// lead a card
+
+document.getElementById("statusline1").innerHTML += "My lead. ";
+
+if ((shouldIPut()==true) && (putted==false))
+{
+document.getElementById("statusline1").innerHTML += "I put. ";
+document.getElementById("putbtn").disabled=true;
+document.getElementById("playonbtn").disabled=false;
+document.getElementById("resignbtn").disabled=false;
+for (i=0;i<3;i++){document.getElementById("btn"+i).disabled = true;}
+i_putted = true;
+putted = true;
+
+return -1;	// flags that no card was returned by leadCard
+}
+
+else
+{
+//choose a card to play
+var choice = chooseCardToLead();
+
+var myCard = myHand.splice(choice, 1);
+writeCard(myCard, "compbtn"+ tricksPlayedThisHand);
+document.getElementById("compbtn"+tricksPlayedThisHand).style.backgroundColor = "";
+
+document.getElementById("statusline1").innerHTML +="I play ";
+writeCard(myCard, "statusline1");
+document.getElementById("statusline1").innerHTML += ". ";
+}
+lastCardLedByMe = myCard;
+return myCard;
+}
+
+function chooseCardInResponse(yourCard)
+{
+var bestWinner = myHand[0];
+var lowest = myHand[0];
+var index_lowest, index_bestWinner = 0;
+
+for (i=0; i<myHand.length;i++)
+{
+if (myHand[i]%13 >= yourCard%13)
+{bestWinner = myHand[i];
+index_bestWinner = i;}
+if (myHand[i]%13 < lowest%13)
+{lowest = myHand[i];
+index_lowest = i;}
+}
+if (bestWinner%13 < yourCard%13){return index_lowest;}
+else
+{
+for (i=0; i<myHand.length;i++)
+{
+if ((myHand[i]%13 >= yourCard%13)&&(myHand[i]%13 <= bestWinner%13))
+{bestWinner = myHand[i];
+index_bestWinner = i;}
+}
+return index_bestWinner;}	// could be changed
+}
+
+function chooseCardToLead()	// choose a card to play when on lead
+{
+//return Math.floor(Math.random()*myHand.length);
+var myHandValues = new Array();
+for (i=0;i<myHand.length;i++){myHandValues[i]=myHand[i]%13;}
+var biggestValue = Math.max.apply(Math, myHandValues);
+for (i=0;i<myHand.length;i++)
+{
+if (myHandValues[i]==biggestValue)
+{biggestCard = myHand[i];
+var indexOfBiggestCard = i;}
+}	// find biggest card
+
+var choice = indexOfBiggestCard;
+while ((choice == indexOfBiggestCard)&&(myHand.length >1))
+{choice = Math.floor(Math.random()*myHand.length);}
+return choice;
+}
+
+function shouldIPut()	
+{// decide whether to put *when about to lead*
+
+if (myGameScore == 4){return false;}
+if ((3-tricksPlayedThisHand + myTricks) <= yourTricks){return false;}
+if (yourTricks >= 2){return false;}
+
+var pWinThisHand;	//actually approx prob of either winning or drawing
+var pWinGameIfResign;
+
+var probs = new Array();
+
+for (i=0;i<myHand.length;i++)
+{
+probs[i]= (myHand[i]%13)/(12.0);
+}
+
+if (myHand.length == 3)
+{
+pWinThisHand = probs[0]*probs[1]*(1-probs[2]);
+pWinThisHand += probs[1]*probs[2]*(1-probs[0]);
+pWinThisHand += probs[2]*probs[0]*(1-probs[1]);
+pWinThisHand += probs[0]*probs[1]*probs[2];
+}
+if (myHand.length == 2)
+{
+if (yourTricks == 1){pWinThisHand = probs[0]*probs[1];}
+else{pWinThisHand = probs[0]*(1-probs[1])+probs[1]*(1-probs[0])+probs[0]*probs[1];}
+}
+if (myHand.length == 1)
+{
+pWinThisHand = probs[0];
+}
+pWinGameIfResign = simulate(yourGameScore+1, myGameScore);
+if (pWinThisHand > pWinGameIfResign){return true;}
+
+return false;
+}
+
+function reactToPut()	// player clicked the I put button
+{
+document.getElementById("putbtn").disabled = true;
+document.getElementById("playonbtn").disabled = true;
+document.getElementById("statusline1").innerHTML += "You put. ";
+
+test = shouldIResign();
+
+if (test == true)
+{
+document.getElementById("statusline1").innerHTML += "I resign the hand. ";
+Iresigned = true;
+endHand();
+return 0;
+}
+else
+{
+document.getElementById("statusline1").innerHTML += "I choose to play on. Play a card. ";
+document.getElementById("statusline2").innerHTML = "Put accepted";
+document.getElementById("resignbtn").disabled = true;
+you_putted = true;
+putted = true;
+}
+}
+
+function shouldIResign()
+{
+if (yourGameScore == 4){return false;}
+if ((3-tricksPlayedThisHand + yourTricks)<= myTricks){return false;}
+if (yourTricks >=2){return true;}
+
+var pWinThisHand = 0;
+var pWinIfIResign = simulate(yourGameScore+1,myGameScore);
+var probs = new Array();
+for (i=0;i< myHand.length;i++)
+{probs[i] = (myHand[i]%13)/12.0;}
+
+var myVirtualHand = new Array();
+for (i=0;i<myHand.length;i++){myVirtualHand[i]=myHand[i]};
+
+if (myLead == true)
+{
+probs[myHand.length] = (lastCardLedByMe%13)/12.0;
+var virtualCard = lastCardLedByMe;
+myVirtualHand.push(virtualCard);
+}
+
+if (myVirtualHand.length==3)
+{
+pWinThisHand = probs[0]*probs[1]*(1-probs[2]);
+pWinThisHand += probs[1]*probs[2]*(1-probs[0]);
+pWinThisHand += probs[2]*probs[0]*(1-probs[1]);
+pWinThisHand += probs[0]*probs[1]*probs[2];
+}
+if (myVirtualHand.length == 1)
+{
+pWinThisHand = probs[0];
+}
+if (myVirtualHand.length == 2)
+{
+if (yourTricks >= 1)
+	{
+	pWinThisHand = probs[0]*probs[1];
+	}
+else
+	{
+	pWinThisHand = probs[0]*probs[1];
+	pWinThisHand += probs[0]*(1-probs[1])+probs[1]*(1-probs[0]);
+	}
+}
+if (pWinThisHand > pWinIfIResign){return false;}
+return true;
+}
+
+function playon()	// player chooses to play on after computer has putted
+{
+
+i_putted = true;
+putted = true;
+document.getElementById("playonbtn").disabled = true;
+document.getElementById("putbtn").disabled = true;
+document.getElementById("resignbtn").disabled = true;
+document.getElementById("statusline2").innerHTML = "Put accepted";
+document.getElementById("statusline1").innerHTML += "You choose to play on. ";
+
+for (i=0;i<3;i++)
+{
+if (cardsYouHavePlayed[i] == false)
+{document.getElementById("btn"+i).disabled=false;}
+}
+
+if (myLead==true)
+{leadCard();}
+else
+{reactToLead(cardOnTable);}
+}
+
+function resign()	// player resigned the current hand
+{
+
+document.getElementById("statusline1").innerHTML += "You resign the hand. ";
+// if ((3-tricksPlayedThisHand + yourTricks) >= myTricks){putted = false;}
+// if you could have saved the hand, set putted to false
+resigned = true;
+
+endHand();
+}
+
+function simulate(yourStart, myStart)
+{
+var p = 0.5; // handsWonByMe/totalHands;
+N=3000;
+var myWinsTotal = 0;
+for (i=0;i<N;i++)
+{
+var myScore = myStart;
+var yourScore = yourStart;
+while ((yourScore < 5) && (myScore < 5))
+	{
+	var x = Math.random();
+	if (x < p){myScore++;}
+	else{yourScore++;}
+	}
+if (myScore == 5){myWinsTotal += 1;}
+}
+return myWinsTotal/N; 
+}
+
+function resetButtons()
+{// called if page reloaded
+
+document.getElementById("putbtn").disabled=true;
+document.getElementById("resignbtn").disabled=true;
+document.getElementById("playonbtn").disabled=true;
+for (i=0;i<3;i++){document.getElementById("btn"+i).disabled=true;}
+document.getElementById("dealbtn").disabled=false;
+}
+
+
+</script>
+
+</head>
+
+<!-- BODY ****************************************************************** -->
+
+
+
+<body onload="resetButtons()" link="yellow">
+	
+<div id="title" style="background-color:white; width:500px; margin-left:10px;">
+
+<h1>iPut</h1>
+
+</div>
+
+<div id="mainpart" style="max-width:500px; width: expression(this.width > 500 ? 500: true); min-width:500px; float:left;">
+	
+<div id="expandableBox1" style="float:left;">
+<a href="javascript:;" 
+onmousedown="if(document.getElementById('info1').style.display == 'none')
+{ document.getElementById('info1').style.display = 'inline'; }else
+{ document.getElementById('info1').style.display = 'none'; }"
+style = "float:left; margin-right:10px; margin-left:10px; padding:10px; 
+background-color:308E3B; color:white; font: 80% arial, helvetica, sans-serif;
+width:500px; text-decoration:none;">
+Information and rules</a>
+</div> 
+	
+<div id="info1" style="float:left; margin-right:10px; margin-left:10px; padding:10px; 
+background-color:308E3B; color:white; font: 80% arial, helvetica, sans-serif;
+width:500px; display:none; clear:both;">
+This page lets you play the card game 
+<a href="http://www.pagat.com/put/put.html" target="new" color="yellow">Put</a> against your computer.
+<br><br/>
+Put is a two-player game of pure bluff. It is something like backgammon with 
+everything but the <a href="http://www.gammonempire.com/doubling-cube.php" target="new" color="yellow">doubling cube</a> 
+removed, or like a very primitive form of poker.
+<br/><br>
+The cards rank, from highest to lowest, 3, 2, A, K, Q, J, 10, 9, 8, 7, 6, 5, 4. It is important not to
+forget that 3 is the highest. Suits do not count. Three tricks are played, with the winner
+of each leading to the next. If the trick is tied, the same player leads again. Whoever wins two
+out of the three tricks wins the hand. The first player to win five hands wins the game.
+<br/><br/>
+Instead of playing a card, either player may elect to "Put". In this case, the other player
+can either resign, allowing the putter to score a point, or play on. If they play on, then 
+whoever wins the current hand also wins the entire game.
+<br/><br/>
+Put is a very fast game, so this page lets you play as many games as you like, in order
+to see whether you can defeat the computer in the long run.
+<br/><br/>
+You can begin a new game by clicking the Deal next hand button. Once the hand is dealt,
+click on a card to play it, or on the I put button to put. If the computer decides to put,
+your only options are to click the Play on or Resign buttons.
+<br/><br/>
+After the first hand, the computer will lead to the first trick in the next hand. 
+The lead alternates in every hand after this.
+<br/><br/>
+Refreshing this page will reset all the scores to zero. You can collapse this box by clicking
+on "Information and rules" again.
+</div>	
+	
+<div id="exapandableBox2" style="float:left; clear:both;">
+<a href="javascript:;" 
+onmousedown="if(document.getElementById('info2').style.display == 'none')
+{ document.getElementById('info2').style.display = 'inline'; }else
+{ document.getElementById('info2').style.display = 'none'; }"
+style = "float:left; margin-right:10px; margin-left:10px; margin-top:10px; padding:10px; 
+background-color:008080; color:white; font: 80% arial, helvetica, sans-serif;
+width:500px; text-decoration:none;">
+History</a> 
+</div>
+
+<div id="info2" style="float:left; pmargin-right:10px; margin-left:10px;
+padding:10px; 
+background-color:008080; color:white; font: 80% arial, helvetica, sans-serif;
+width:500px; display:none; clear:both;">
+Put was first recorded in the 1660s and appeared in
+<a href="http://books.google.co.nz/books/about/
+The_compleat_gamester.html?id=6-lYAAAAYAAJ&redir_esc=y" target="new">
+The Compleat Gamester</a> by Charles Cotton. It was a disreputable gambling game 
+and may have been the <a href="http://en.wikipedia.org/wiki/Three-card_Monte">Three Card
+Monte</a> of its day. Cotton's description contains plenty of information about
+how to cheat at the game. The computer always plays honestly in this version, 
+meaning that, for example, it doesn't know the contents of your hand when
+deciding what card to play. 
+<br/><br/>
+
+
+
+</div>
+
+
+<div id = "game" style="float:left; width:500px; border-style:solid; border-color:green; 
+border-width:1px; background-color:white; margin:10px; padding:10px; clear:both;
+display:inline;" >
+
+<!-- display:inline fixes a bug in internet explorer -->
+
+<table>
+<tr>
+<th></th>
+<th align="center">You</th>
+<th align="center" style="width:100px;"></th>
+<th align="center">Computer</th>
+</tr>
+
+<tr>
+<td>Games won:</td>
+<td align="center" id="yourOverallScoreBox"></td>
+<td align="center"></td>
+<td align="center" id="myOverallScoreBox"></td>
+</tr>
+
+<tr>
+<td>Hands won in current game:</td>
+<td align="center" id="yourGameScoreBox"></td>
+<td align="center">(9)</td>
+<td align="center" id="myGameScoreBox"></td>
+</tr>
+
+<tr>
+<td>Tricks won in current hand:</td>
+<td align="center" id= "yourHandScoreBox"></td>
+<td align="center">(3)</td>
+<td align="center" id = "myHandScoreBox"></td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"><button id="btn0" style="width:40; height:30"
+disabled="disabled" onclick = "playCard(0)"></button></td>
+<td align="center" id="playField0"></td>
+<td align="center"><button id="compbtn0" style="width:40; height:30; 
+	background-color:green;" disabled="disabled"></button></td>
+</tr>
+
+<tr>
+<td><button id="playonbtn" disabled="disabled" onclick="playon()" style="width:80"
+>Play on</button></td>
+<td align="center"><button id="btn1" style="width:40; height:30;"
+ disabled="disabled" onclick = "playCard(1)"></button></td>
+<td align="center" id="playField1"></td>
+<td align="center"><button id="compbtn1" style="width:40; height:30; 
+	background-color:green;" disabled="disabled"></button></td>
+</tr>
+
+<tr>
+<td><button id="resignbtn" disabled="disabled" onclick="resign()" style="width:80;"
+>Resign</button></td>
+<td align="center"><button id="btn2" style="width:40; height:30;"
+ disabled="disabled" onclick="playCard(2)"></button></td>
+<td align="center" id="playField2"></td>
+<td align="center"><button id="compbtn2" style="width:40; height:30;
+	background-color:green;" disabled="disabled"></button></td>
+</tr>
+
+<tr>
+<td style="height:10;"></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"><button id="putbtn" style="height:30"
+ disabled="disabled" onclick="reactToPut()">I put</button></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td><button id="dealbtn" style="height:30" onclick="init()">
+	Deal next hand</button></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td colspan="4" id="statusline1" style="width:500px;">
+</td>
+</tr>
+
+<tr>
+<td colspan="4" id="statusline2" style="font:small-caption; color:green;">
+Click Deal next hand to continue.
+</td>
+</tr>
+
+</table>
+
+</div>
+
+
+</div>
+
+</body>
+
+</html>
