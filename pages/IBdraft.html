@@ -1,0 +1,89 @@
+<html>
+
+<head>
+
+<style>
+.case {
+    clear : both;
+	margin : 0 auto;
+	width : 500px;
+	font-size : 30px;
+	background-color : E6E6FA;
+	margin-bottom : 2px;
+	cursor : pointer;
+	display : none;
+	z-index : 98;
+}
+
+.story {
+    display : none;
+	float : left;
+	position : relative;
+	text-align : left;
+	background-color : FFFFF0;
+}
+
+#hintmode {
+    margin-top : 50px;
+}
+
+</style>
+
+<script type="text/javascript">
+
+var stories = [
+"<h4>Story</h4>" +
+"<p>It was a dark and stormy night. It was a dark and stormy night. It was a dark and stormy night. It was a dark and stormy night. " +
+"It was a dark and stormy night. It was a dark and stormy night. It was a dark and stormy night. It was a dark and stormy night.</p>" +
+"<p>Suddenly there was a second paragraph!</p>",
+"Lorem ipsum etc."
+];
+
+var hints = ["hint1", "hint2"];
+
+var hintMode = false;
+
+var begin = function(){
+    document.getElementById("picture").style.backgroundColor = "green";
+    document.getElementById("intro").style.display = "none";
+    for (var i = 1; i < 4; i++){
+	    document.getElementById("case" + i).style.display = "block";
+	}
+	document.getElementById("hintmode").style.display = "block";
+}
+
+var showCase = function(caseNum){
+    var story = document.getElementById("story" + caseNum);
+    story.innerHTML = (hintMode) ? hints[caseNum-1] : stories[caseNum-1];
+	story.style.display = (story.style.display == "none") ? "inline" : "none";
+}
+
+var toggleHintMode = function(){ 
+    hintMode = !hintMode;
+	document.getElementById("hintmode").innerHTML = (hintMode) ? "Back to Stories" : "Hint Mode";
+    document.getElementById("hintmode").style.backgroundColor = (hintMode) ? "E6E6FA" : "pink";
+    for (var i = 1; i < 4; i++){
+	    document.getElementById("case" + i).style.backgroundColor = (hintMode) ? "pink" : "E6E6FA";
+	    document.getElementById("story" + i).style.display = "none";
+	    }
+	}
+
+</script>
+
+</head>
+
+<body style="margin:0 auto; width:800px; text-align:center; font-family : sans-serif;">
+
+<div id="picture" style="margin:0 auto; width:500px; height:400px; background-color:blue; clear:both;" onclick="begin()"></div>
+<div id="intro">Introductory text. Can sometimes be brusque. Click on picture to begin.</div>
+<div class="case" id="case1" onclick="showCase(1)">Title 1</div>
+<div class="story" id="story1"></div>
+<div class="case" id="case2" onclick="showCase(2)">Title 2</div>
+<div class="story" id="story2"></div>
+<div class="case" id="case3" onclick="showCase(2)">Title 3</div>
+<div class="case" id="hintmode" onclick="toggleHintMode()">Hint Mode</div>
+
+<div id="debug"></div>
+</body>
+
+</html>

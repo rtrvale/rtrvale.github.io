@@ -1,10 +1,340 @@
 <html>
+<title>The Return of Inspector Bloodhound</title>
+<meta name="description" content="Help Inspector Bloodhound to solve some of his most baffling cases!" />
+<link rel="image_src" href="../Pictures/inspector.png">
+<meta name="author" content="Richard Vale">
 <head>
+
+<style>
+.case {
+    clear : both;
+	margin : 0 auto;
+	width : 500px;
+	font-size : 25px;
+	background-color : E6E6FA;
+	margin-bottom : 2px;
+	cursor : pointer;
+	display : none;
+	z-index : 98;
+}
+
+.story {
+    display : block;
+	float : left;
+	position : relative;
+	text-align : left;
+	background-color : FFFFF0;
+}
+
+#hintmode {
+    margin-top : 50px;
+	background-color : pink;
+}
+
+</style>
+
+<script type="text/javascript">
+
+var stories = [
+"<h4>The Case of the Poisoned Publisher</h4>" +
+"<p>Inspector Bloodhound was called in to investigate the death of well-known publisher Hubert Romney,"+
+" whose body had been found slumped over the desk in his study. Romney had been poisoned by Rojulin,"+
+" a rare and subtle nerve toxin which"+
+" killed without leaving a trace, mimicking the exact symptoms of heart failure in the victim. Rojulin could be obtained only by distillation of the juice of the Rojula berry, an endangered "+
+" fruit which grows only in the Andean mountains. A note in"+
+" Romney's handwriting was found on his desk, stating that he believed his brother Philbrick was trying"+ 
+" to kill him.</p>"+
+"<p>Philbrick Romney was a shadowy character who had recently returned from Peru and had come to live with his brother, in spite of the long-standing animosity between them. When Inspector Bloodhound interviewed Philbrick, he appeared to be very agitated and could give no satisfactory account of his movements on the day of his brother's death, except to admit that he had been in the house at the time.</p>"
++
+"<p>In spite of this, after questioning Philbrick and reading the autopsy report, Inspector Bloodhound ordered the case to be closed without making an arrest. Why?</p>",
+
+"<h4>The Man in the Yellow Waistcoat</h4>"+
+"<p>Inspector Bloodhound had been called in to investigate a theft at the home of the famous but aging archaeologist Sir Harold Cartwright. Over the years, Sir Harold had gone blind owing to a wasting disease and was dependent on his valet, Grubbs.</p>"
++
+"<p>\"As soon as I entered Sir Harold's room to make the fire, I noticed that the golden scarab that hangs on the wall by the door was missing,\" explained Grubbs as he walked to the house with Inspector Bloodhound, \"Sir Harold brought it back from his excavation of the tomb of Amenhotep, you know. Some even say that he went blind because of the pharaoh's curse, and if...\"</p>"
++
+"<p>\"Yes, quite,\" said Inspector Bloodhound. \"What did Sir Harold tell you about the theft?\"</p>"
++
+"<p>\"He said that a man in a yellow waistcoat had called, trying to sell encyclopedias. Sir Harold wasn't buying and the man went away. I was most vexed that I was not there, as I had gone out to buy a stamp. Sir Harold is completely blind, you see, and finds his way about with a cane. The cheek! Trying to sell encyclopedias to a blind man!\"</p>"
++
+"<p>\"But I understand the salesman has been found?\" said Inspector Bloodhound.</p>"
++
+"\"Yes,\" said Grubbs. \"The constable found him in the village and brought him back here.\"</p>"
++
+"<p>A tall thin man, wearing a yellow waistcoat and a cloth cap and carrying a stack of books, was seated in the hall.</p>"
++
+"\"My name's Delman,\" he said. \"I had nothing to do with it! I know nothing about any theft! The gentleman and I had a little chat, and then I left. I swear!\"</p>"
++
+"<p>Grubbs frowned sternly at him and then turned to the Inspector.</p>"
++
+"<p>\"Would you like to see Sir Harold now?\" he said.</p>"
++
+"<p>\"No, Mr. Grubbs,\" said Inspector Bloodhound cooly, \"not before you have apologised to Mr. Delman, returned the scarab, and abandoned this transparent tissue of lies.\"</p>"
++
+"<p>How did he know that Grubbs was lying?</p>",
+
+"<h4>The Case of the Tropical Fish</h4>"
++
+"<p>Inspector Bloodhound was investigating the death of the noted eccentric"+
+" fish-fancier Lady Arabella Runcorn at her country seat, Runcorn Hall."+
+" Lady Runcorn was being courted by the young but penniless Australian"+
+" naturalist Gilbert Stevens, and it was rumoured that she had recently altered her will in his favour.</p>"
++
+"<p>Lady Runcorn's body had been found in her bathtub. The walls of her"+
+" bathroom were lined with fishbowls, one of which had apparently toppled"+
+" over and emptied its contents into the bath. Inspector Bloodhound"+
+" interviewed the butler, Baines, who had found the body.</p>"+
+"<p>\"We became concerned when her Ladyship didn't appear at breakfast,\""+
+" explained Baines. \"We called her name through the bathroom door but she"+
+" didn't reply. Eventually, myself and Mr. Stevens agreed to break down"+
+" the door. Upon entering the bathroom, we saw her body lying in the bath,"+
+" and there was also a small red fish swimming in the bath. Mr. Stevens"+
+" looked very agitated: \"Stand back!\", he cried \"That's an electric poison arrow fish!\". Nobody touched anything. Then we called the police\".</p>"
++
+"<p>The fish was later removed, and the post-mortem revealed that Lady Runcorn had died of electrocution some time around midnight the night before.</p>"
++
+"<p>Later, Inspector Bloodhound interviewed Stevens.</p>\"How did you recognise the electric poison arrow fish?\" he asked."+
+"</p>"+
+"<p>\"I've encountered the electric poison arrow fish before,\" replied"+
+" Stevens \"Once when I was diving off the Great Barrier Reef, one brushed against my face. I suffered a massive electric shock. If a colleague "+
+"hadn't rescued me, I would have been killed! I was paralysed for three"+
+" months and was very lucky not to die. I'm not surprised that poor Lady"+
+" Arabella, with her weak heart, did not survive this tragic accident.\"</p>"+
+"\"Of course,\" said Inspector Bloodhound later, \"I immediately put an end to Stevens' ridiculous charade by arresting him for murder.\"</p>"+
+"<p>How did he know?</p>",
+
+"<h4>The Case of the Stolen Aircraft</h4>"+
+"<p>Inspector Bloodhound was investigating the theft of a prototype aircraft"+
+" from a private airfield owned by the manufacturer. He was interviewing the"+
+" mechanic, Symes.</p>"+
+"<p>\"I was putting my tools away after finishing my work on the plane,\" said"+
+" Symes, \"when a masked man approached me brandishing a pistol. He demanded"+
+" that I prepare the plane for take-off. Then he climbed in. I didn't try to"+
+" stop him because I didn't like the look of that pistol! After he took off,"+
+" I raised the alarm.\"</p>"+
+"<p>The only member of staff on the airbase who didn't have an alibi for the"+
+" time of the theft was a test pilot, who made the following statement:</p>"+
+"<p>\"It was a fine day, so I went for a walk alone in the woods near the"+
+" airfield. I saw the prototype take off and head South, but I thought it"+
+" was just a test flight. When I got back to the base at about 7pm, I saw"+
+" there was a great commotion and found out what had happened.\"</p>"+
+"<p>\"Did you see anyone on your walk?\" asked Inspector Bloodhound.</p>"+
+"<p>\"No. It was very quiet in the woods and I took a packed lunch with me. I"+
+" hope I am not under suspicion of having anything to do with the crime?\"</p>"+
+"<p>\"Don't worry,\" said Inspector Bloodhound \"it's clear that you didn't steal that aircraft.\"</p>"+
+"<p>How did he know?",
+
+"<h4>The Riddle of the Staffordshire Soldiers</h4>"+
+"<p>Inspector Bloodhound and his colleauge, Constable Spigot, were sitting by the fire.</p><p>\"I heard about an interesting case,\" said Inspector Bloodhound. \"It happened near an army barracks in Staffordshire, some years ago. One British soldier shot and killed another at point-blank range in broad daylight. Terrible business.\"</p>"+
+"<p>\"What happened to the criminal?\" asked Constable Spigot.</p><p>\"Nothing,\" replied Inspector Bloodhound. \"As far as I know, the man's killer lived to a ripe old age, and never regretted his deed.\"</p>"+
+"<p>\"Perhaps nobody knew about the killing?\" suggested the Constable.</p><p>"+
+"<p>\"On the contrary,\" replied Inspector Bloodhound, \"the killer boasted about it to his friends, and anyway, there were many witnesses. He made no secret of it at all!\"</p>"+ 
+"<p>\"Then I don't understand!\" said Constable Spigot, with a puzzled frown. \"Why weren't the police called?\"</p>"+
+"<p>\"Let's just say that the murderer's actions proved fully justified,\" said Inspector Bloodhound mysteriously.</p><p>"+
+"Can you explain why?</p>",
+
+"<h4>The Prince of Perelvania</h4>"+
+"<p>Inspector Bloodhound was attending an Interpol conference on 'Policing Today' in the tiny central European principality of Perelvania. Perelvania was politically unstable, as the ruling Prince had been challenged by a guerilla organisation known as the Black Hand, led by a mysterious bandit, One-Eyed Vladimir. The Black Hand claimed that the Prince's rule was corrupt and had sworn to destroy him. They had some support amongst the peasants of the mountains, where they were known to be in hiding.</p>"+
+"<p>One morning at breakfast, a courier rushed up to Inspector Bloodhound.</p>"+
+"<p>\"Come quickly!\" he cried. \"The Prince has been murdered!\"<p>"+
+"<p>The Inspector followed him to the palace, where he was met by the Prime Minister, who showed him into the royal apartments. The Prince's body was slumped over a table in a room with bare walls and no windows. A pistol, from which the fatal bullet had been fired into his left temple, was clutched in his left hand. Apart from the table and chair, there was no other furniture in the room.</p>"+
+"<p>\"Tell me what happened,\" said Inspector Bloodhound.</p>"+
+"<p>\"First,\" said the Prime Minister, \"I must tell you that this room is the Prince's private chamber. The walls, floor and ceiling are three metres thick and are made of solid concrete. The Prince has the only key, which he wears on a chain around his neck. The only door is the one by which you entered. The Prince had this chamber built because of his fear of The Black Hand. He ordered that if he was ever locked in here for more than twenty-four hours, the door should  be broken open. He was terrified that The Black Hand would find some means of killing him, even in this inner  sanctum! Anyway, this morning the twenty-four hours were up, and we broke open the door, which took over thirty minutes, to find this dreadful scene! Oh, what are we to do? This is the worst day in the history of Perelvania!\"</p>"+
+"<p>At that moment, a royal guard appeared.</p>"+
+"<p>\"Your excellency!\" he cried, \"One-Eyed Vladimir has been captured!\"</p>"+
+"<p>Inspector Bloodhound and the Prime Minister followed him outside, to where a one-eyed man was being held under guard.</p>"+
+"<p>\"Traitor!\" thundered the Prime Minister, \"You shall hang for this! Inspector Bloodhound here is a detective from Scotland Yard. He'll find out how you carried out your foul crime!\"</p>"+
+"<p>\"Pah!\" spat One-Eyed Vladimir, \"Miserable Englishman, why don't you go home to your fogs? Perelvania is no place for you! Today we have witnessed the dawn of a new era! I may be killed, but The Black Hand has triumphed!\"</p>"+
+"<p>\"Enough! Take him away to the cells!\" cried the Prime Minister.</p>"+
+"<p>\"That would be a travesty of justice,\" said Inspector Bloodhound. \"This man is innocent.\"</p>"+
+"<p>How did he know?</p>",
+
+"<h4>The Brotherhood of the Lobster's Claw</h4><p>Inspector Bloodhound had been called in to investigate yet another grisly murder in yet another country house. This time, the victim was Sir Archibald Spoonley, who had been murdered in front of his wife, Lady Spoonley, in"
++
+" the drawing room of Spoonley Hall.</p>"
++
+"<p>\"It was awful! Awful!\" sobbed Lady Spoonley. \"Archie and I were sitting at opposite ends of the room."
++
+" Archie was reading in an armchair in front of the french windows, and I was knitting. Suddenly, all the lights went out. Before I could react, I felt myself held in a vice-like grip, and a sinister voice whispered in my ear: 'Now you will see what becomes of those who defy the Brotherhood of the Lobster's Claw!'."
++
+" I watched in horror as a long line of tall figures, hooded and clad in voluminous robes, marched into the room. Poor Archie seemed to be rooted in his chair, his face frozen in terror. They clustered in a tight circle round his chair, more and more of them, until he was quite surrounded. Then the figure standing nearest Archie took a bottle from his robes and said:"
++
+"<\p><p>'I anoint him with the lobster's blood!'</p>"
++
+"<p>and he sprinkled something onto Archie's chest from the bottle. Archie lifted his hands as if to ward them off, and I saw that his kness were trembling from fear! Then the same figure took a jewelled dagger from his robes, held the point against my husband's face, and said:"
++
+"<\p><p>'I strike him with the lobster's claw!'</p>"
++
+"<p>and he slit poor Archie's throat from ear to ear! Then I fainted. When I came to, the figures had gone!\"</p>"
++
+"<p>Inspector Bloodhound said: \"I have one question, Lady Spoonley. How could you have seen all these details if all the lights were out?\"</p>"
++
+"<p>\"Oh, one of the figures was carrying a candle.\" replied Lady Spoonley.</p>"
++
+"<p>\"I see,\" said Inspector Bloodhound, \"and did you make any attempt to intervene?\"</p>"
++
+"<p>\"I have already told you: I was being held in my chair! I couldn't move, I could but watch the horrors unfold before me!\"</p>"
++
+"<p>\"Ah,yes,\" said Inspector Bloodhound, \"and had your husband mentioned the, er.. Lobster's Claw before?\"</p>"
++
+"<p>\"He did once say that he had been a member of a secret society in his youth, but it had all been long forgotten!\"</p>"
++
+"<p>\"Well, Lady Spoonley,\" said Inspector Bloodhound, \"it seems to me that you could have enjoyed success as a writer of sensational fiction. Since, however, you have chosen the career of murderess, I feel that I have no choice but to arrest you!\"</p>"
++
+"<p>How did he know that Lady Spoonley was lying?</p>",
+
+"<h4>The Case of the Butler's Confession</h4>"
++
+"<p>\"Not <i>another</i> country-house murder mystery!\" sighed Inspector Bloodhound to himself, as he stepped over the threshold of Glubly Towers. The Duke of Glubly had been found slumped over the desk in his study, dead of a gunshot wound. It was quickly established that there had been only two other people in the house at the time of the murder: the maid, Mrs. Gudgeon, and the butler, Pludgins. They were both asked to make statements to the police.</p>"
++
+"<p>\"I was in the kitchen,\" stated Mrs. Gudgeon, \"when I heard a loud shot. I rushed upstairs and found the Duke slumped over his desk. I quickly telephoned the emergency services.\"</p>"
++
+"<p>\"What were you doing in the kitchen?\" asked Inspector Bloodhound.</p>"
++
+"<p>\"Washing the saucepans,\" replied Mrs. Gudgeon.</p>"
++
+"<p>A tearful Pludgins said:</p>"
++
+"<p>\"I liked the Duke, but I... I was insanely jealous of his wealth! Damn it, I couldn't take any more! His displays of opulence disgusted me! I was in his study and he picked up his diamond-encrusted fountain pen, and I just saw red! I snatched his revolver off the sideboard, shot him, and ran away. I'm sorry for what I've done... I suppose I'd better give myself up.\"</p>"
++
+"<p>After interviewing the two suspects, Inspector Bloodhound scratched his head and returned to Scotland Yard to consider his next move. There was nothing to prevent him from arresting Pludgins, yet he did not. Why?</p>",
+
+"<h4>The Robbery at Garside Grange</h4>"
++
+"<p>Inspector Bloodhound was staying as a house guest at Garside Grange, an ancient manor house surrounded on three sides by a moat. The other occupants were Lady Garside, her daughter Gertrude, and Roger Wimple, a struggling actor who hoped to win  Gertrude's hand in marriage, although Lady Garside had reservations about the match.</p>"
++
+"<p>One morning the household was woken in the early hours by a commotion in one of the downstairs rooms. There was a cry, a crash of breaking glass, and a splash. Hurrying downstairs, Inspector Bloodhound found Lady Garside comforting a dishevelled Roger in the library.</p>"
++
+"<p>\"I'm sorry,\" said Roger, indicating the broken window. \"He got away.\"</p>"
++
+"<p>A glance at the wall showed that a valuable set of silver soup spoons was missing.</p>"
++
+"<p>\"Never mind,\" said Lady Garside. \"Tell us what happened.\"</p>"
++
+"<p>\"I couldn't sleep, so I came down here about an hour ago to read,\" said Roger. \"I suppose I must have dozed off. I awoke with a sudden start. The light was out, but I could hear someone moving in the gloom. I snatched up the only weapon I could think of - a big lump of coal from the coal-scuttle there - and shouted 'Who's there?'. There was a gasp of surprise, and I saw a shadow move towards the window. I tried to collar him - it - but he leapt through the window with a crash. I threw the lump of coal after him, but I heard it splash in the moat... I'm afraid I rather lost my head...\"</p>"
++
+"<p>\"Just a minute,\" said Lady Garside. \"Do you mean to imply that you reading with the light out?\"</p>"
++
+"<p>\"No,\" said Roger. \"I suppose the - the burglar must have switched it off while I was s - sleeping.\"</p>"
++
+"<p>Gertrude had appeared.</p>"
++
+"<p>\"Oh, Roger!\" she said, producing an enormous white linen handkerchief. \"You brave boy! Dry your tears!\"</p>"
++
+"<p>\"Thank you,\" snuffled Roger, crumpling the handkerchief in his hands and dabbing at his eyes.</p>" 
++
+"<p>\"Gertrude, dear, I...\" he began, as he handed it back to her.</p>"
++
+"<p>\"Stop this!\" barked Inspector Bloodhound. \"You call yourself an actor, boy, and you interrupt my sleep for this pathetic performance? Return those spoons at once!\"</p>"
++
+"<p>What had made him suspicious?</p>",
+
+
+"<h4>The Mystery of the Howling Monk</h4>"+
+"<p>Inspector Bloodhound and his colleague Constable Spigot were returning from a sandwich shop one wintry afternoon when, from the other side of a high yew hedge, there came a shout for help. They quickly found a gate and dashed into a churchyard, where a bespectacled vicar was bent over the lifeless body of an older churchman, a knife protruding from his chest. A glance sufficed to show that he was dead.</p>"+
+"<p>\"What's all this then?\" said Constable Spigot.</p>"+
+"<p>\"The Lord have mercy upon us!\" groaned the vicar, shaking all over. \"Poor Canon Westerley! It was the Howling Monk!\"</p>"+
+
+"<p>Some time later the vicar, Reverend Baynes, had calmed down enough to give a statement.</p>"+
+
+"<p>\"For some weeks,\" he explained, \"Canon Westerley has been troubled by visions of a robed figure prowling the churchyard. There is a legend that this church was built on the site of an ancient abbey. At the time of the reformation, the abbot refused to leave, and killed himself instead, swearing revenge upon all who tread this ground. Sometimes at night we hear howls... it was not good for the canon and I to live here alone... but I never thought...\"</p>"+
+
+"<p>\"And have you ever seen this monk?\" asked the Inspector."+
+
+"<p>\"Perhaps no more than a glimpse, until an hour ago! The canon was in the churchyard. I had an uneasy feeling and stepped out to join him. I saw a hooded figure approaching him with a knife in its hand. I was about to shout a warning, but then the figure gave forth an unearthly, ear-splitting howl, which made my hair stand on end. The canon turned, and then the knife was in his chest! I ran to him, and the figure darted off in another direction. Oh! That sound! It rings in my ears yet! As long as I live I shall not forget it!\"</p>"
++
+"<p>\"Did the canon say anything before he died?\"</p>"
++
+"<p>\"No, No sooner had I reached him than I shouted for help, and a few seconds later I saw you coming through the gate,\" said Reverend Baynes.</p>"
++
+"\"One more question. Why are you wearing gloves?\" asked Inspector Bloodhound.</p>"
++
+"<p>\"Oh, against the cold,\" said Baynes.</p>"
++
+"<p>\"Well, Reverend Baynes,\" said Inspector Bloodhound, \"it's obvious that you are lying. I'm afraid you'll have to accompany us to Scotland Yard.\"</p>"
++
+"<p>How did he know the story was a lie?</p>"
+];
+
+var hints = ["Suppose you knew that Philbrick Romney <i>did</i> murder his brother. Would the story end differenly?", 
+"One of the statements made by Grubbs cannot possibly be true.", 
+"\"Any detective worth his salt would have seen that Stevens' story didn't hold water,\" said Inspector Bloodhound later.", 
+"We only know one thing about the criminal. What?", 
+"Under what circumstances does society deem it acceptable for one person to kill another?", 
+"Suppose there was no Black Hand but everything else remained the same. What would you conclude?", 
+"Inspector Bloodhound solved the crime by putting himself in Lady Spoonley's place and seeing if the story made sense.", 
+"This hinges on a very natural assumption not being true.", 
+"Inpector Bloodhound's suspicions were excited by something he <i>didn't</i> see.", 
+"How were Inspector Bloodhound and Constable Spigot alerted that something had happened? How <i>should</i> they have been alerted?"];
+
+var hintMode = false;
+
+var begin = function(){
+    document.getElementById("picture").style.backgroundColor = "green";
+	document.getElementById("picture").style.backgroundImage = "url(../Pictures/invspector.png)";
+    document.getElementById("intro").style.display = "none";
+    for (var i = 1; i <= stories.length; i++){
+	    document.getElementById("case" + i).style.display = "block";
+	}
+	document.getElementById("hintmode").style.display = "block";
+	for (var caseNum=1; caseNum<=stories.length; caseNum++){
+        var story = document.getElementById("story" + caseNum);
+        story.innerHTML = (hintMode) ? hints[caseNum-1] : stories[caseNum-1];
+		story.style.display = "none";
+    }
+}
+
+var showCase = function(caseNum){
+    var story = document.getElementById("story" + caseNum);
+    story.innerHTML = (hintMode) ? hints[caseNum-1] : stories[caseNum-1];
+	story.style.display = (story.style.display == "none") ? "block" : "none";
+}
+
+var toggleHintMode = function(){ 
+    hintMode = !hintMode;
+	document.getElementById("hintmode").innerHTML = (hintMode) ? "Back to Stories" : "Hint Mode";
+    document.getElementById("hintmode").style.backgroundColor = (hintMode) ? "E6E6FA" : "pink";
+    for (var i = 1; i<= stories.length; i++){
+	    document.getElementById("case" + i).style.backgroundColor = (hintMode) ? "pink" : "E6E6FA";
+	    document.getElementById("story" + i).style.display = "none";
+	    }
+	}
+
+</script>
 
 </head>
 
-<body>
-Coming soon!
+<body style="margin:0 auto; width:800px; text-align:center; font-family : sans-serif;">
+
+<div id="picture" style="margin:0 auto; width:500px; height:400px; background-color:blue; clear:both; background-image : url(../Pictures/inspector.png); background-size:100%;" onclick="begin()"></div>
+<div id="intro"><p>Inspector Bloodhound is one of Scotland Yard's finest, and here we present a collection 
+of his most famous cases in puzzle form. If he has one character flaw, it is perhaps that he can 
+sometimes be a little too quick to pounce upon the tiniest inconsistency in the story of a witness.
+</p><p>Click on the picture to begin!</p>
+</div>
+<div class="case" id="case1" onclick="showCase(1)">The Case of the Poisoned Publisher</div>
+<div class="story" id="story1"></div>
+<div class="case" id="case2" onclick="showCase(2)">The Man in the Yellow Waistcoat</div>
+<div class="story" id="story2"></div>
+<div class="case" id="case3" onclick="showCase(3)">The Case of the Tropical Fish</div>
+<div class="story" id="story3"></div>
+<div class="case" id="case4" onclick="showCase(4)">The Case of the Stolen Aircraft</div>
+<div class="story" id="story4"></div>
+<div class="case" id="case5" onclick="showCase(5)">The Riddle of the Staffordshire Soldiers</div>
+<div class="story" id="story5"></div>
+<div class="case" id="case6" onclick="showCase(6)">The Prince of Perelvania</div>
+<div class="story" id="story6"></div>
+<div class="case" id="case7" onclick="showCase(7)">The Brotherhood of the Lobster's Claw</div>
+<div class="story" id="story7"></div>
+<div class="case" id="case8" onclick="showCase(8)">The Case of the Butler's Confession</div>
+<div class="story" id="story8"></div>
+<div class="case" id="case9" onclick="showCase(9)">The Robbery at Garside Grange</div>
+<div class="story" id="story9"></div>
+<div class="case" id="case10" onclick="showCase(10)">The Mystery of the Howling Monk</div>
+<div class="story" id="story10"></div>
+<div class="case" id="hintmode" onclick="toggleHintMode()">Hint Mode</div>
+
+<div id="debug"></div>
 </body>
 
 </html>
