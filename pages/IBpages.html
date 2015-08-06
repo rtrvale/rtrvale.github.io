@@ -2,6 +2,7 @@
 <title>The Return of Inspector Bloodhound</title>
 <meta name="description" content="Help Inspector Bloodhound to solve some of his most baffling cases!" />
 <link rel="image_src" href="../Pictures/inspector.png">
+<link rel="icon" href="../Pictures/battenberg.png" />
 <meta name="author" content="Richard Vale">
 <head>
 
@@ -115,7 +116,7 @@ var stories = [
 "<p>The only member of staff on the airbase who didn't have an alibi for the"+
 " time of the theft was a test pilot, who made the following statement:</p>"+
 "<p>\"It was a fine day, so I went for a walk alone in the woods near the"+
-" airfield. I saw the prototype take off and head South, but I thought it"+
+" airfield. I saw the prototype take off and head south, but I thought it"+
 " was just a test flight. When I got back to the base at about 7pm, I saw"+
 " there was a great commotion and found out what had happened.\"</p>"+
 "<p>\"Did you see anyone on your walk?\" asked Inspector Bloodhound.</p>"+
@@ -155,9 +156,9 @@ var stories = [
 +
 "<p>\"It was awful! Awful!\" sobbed Lady Spoonley. \"Archie and I were sitting at opposite ends of the room."
 +
-" Archie was reading in an armchair in front of the french windows, and I was knitting. Suddenly, all the lights went out. Before I could react, I felt myself held in a vice-like grip, and a sinister voice whispered in my ear: 'Now you will see what becomes of those who defy the Brotherhood of the Lobster's Claw!'."
+" Archie was reading in an armchair in front of the french windows, and I was knitting. Suddenly, all the lights went out. Before I could react, I felt myself held in a vice-like grip, and a sinister voice whispered in my ear:<o>'Now you will see what becomes of those who defy the Brotherhood of the Lobster's Claw!'</p>"
 +
-" I watched in horror as a long line of tall figures, hooded and clad in voluminous robes, marched into the room. Poor Archie seemed to be rooted in his chair, his face frozen in terror. They clustered in a tight circle round his chair, more and more of them, until he was quite surrounded. Then the figure standing nearest Archie took a bottle from his robes and said:"
+"I watched in horror as a long line of tall figures, hooded and clad in voluminous robes, marched into the room. Poor Archie seemed to be rooted in his chair, his face frozen in terror. They clustered in a tight circle round his chair, more and more of them, until he was quite surrounded. Then the figure standing nearest Archie took a bottle from his robes and said:"
 +
 "<\p><p>'I anoint him with the lobster's blood!'</p>"
 +
@@ -213,7 +214,7 @@ var stories = [
 +
 "<p>\"I couldn't sleep, so I came down here about an hour ago to read,\" said Roger. \"I suppose I must have dozed off. I awoke with a sudden start. The light was out, but I could hear someone moving in the gloom. I snatched up the only weapon I could think of - a big lump of coal from the coal-scuttle there - and shouted 'Who's there?'. There was a gasp of surprise, and I saw a shadow move towards the window. I tried to collar him - it - but he leapt through the window with a crash. I threw the lump of coal after him, but I heard it splash in the moat... I'm afraid I rather lost my head...\"</p>"
 +
-"<p>\"Just a minute,\" said Lady Garside. \"Do you mean to imply that you reading with the light out?\"</p>"
+"<p>\"Just a minute,\" said Lady Garside. \"Do you mean to imply that you were reading with the light out?\"</p>"
 +
 "<p>\"No,\" said Roger. \"I suppose the - the burglar must have switched it off while I was s - sleeping.\"</p>"
 +
@@ -270,7 +271,7 @@ var hints = ["Suppose you knew that Philbrick Romney <i>did</i> murder his broth
 var hintMode = false;
 
 var begin = function(){
-    document.getElementById("picture").style.backgroundColor = "green";
+    document.getElementById("picture").style.backgroundColor = "black";
 	document.getElementById("picture").style.backgroundImage = "url(../Pictures/invspector.png)";
     document.getElementById("intro").style.display = "none";
     for (var i = 1; i <= stories.length; i++){
@@ -306,7 +307,7 @@ var toggleHintMode = function(){
 
 <body style="margin:0 auto; width:800px; text-align:center; font-family : sans-serif;">
 
-<div id="picture" style="margin:0 auto; width:500px; height:400px; background-color:blue; clear:both; background-image : url(../Pictures/inspector.png); background-size:100%;" onclick="begin()"></div>
+<div id="picture" style="margin:0 auto; width:500px; height:400px; background-color:white; clear:both; background-image : url(../Pictures/inspector.png); background-size:100%;" onclick="begin()"></div>
 <div id="intro"><p>Inspector Bloodhound is one of Scotland Yard's finest, and here we present a collection 
 of his most famous cases in puzzle form. If he has one character flaw, it is perhaps that he can 
 sometimes be a little too quick to pounce upon the tiniest inconsistency in the story of a witness.

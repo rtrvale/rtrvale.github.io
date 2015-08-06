@@ -55,6 +55,7 @@ hr {
   background-image: url("../Pictures/evaders_vs_tau_ising.png");
   background-position : center bottom;
   background-size : 300%;
+  -moz-background-size : 300%;
 } 
 
 #networkImputation {
@@ -66,41 +67,48 @@ hr {
   background-image: url("../Pictures/prob0.png");
   background-position : center bottom;
   background-size : 500%;
+  -moz-background-size : 500%;
  }
 
 #GOTvideo {
   background-image: url("../Pictures/tortoise_slide.png");
   background-position : center left;
   background-size : 300%;
+  -moz-background-size : 300%;
 }
 
 #whales {
   background-image: url("../Pictures/whale.png");
   background-position : center;
   background-size : 105%;
+    -moz-background-size : 105%;
 }
 
 #copulas {
   background-image: url("../Pictures/spiral.png");
   background-position : center;
   background-size : 120%;
+    -moz-background-size : 120%;
 }
 
 #put {
   background-image : url("../Pictures/cards.png");
   background-position : center;
   background-size : 101%;
+    -moz-background-size : 101%;
 }
 
 #wordCloud {
   background-image : url("../Pictures/wordcloud.png");
   background-position : center;
   background-size : 200%;
+    -moz-background-size : 200%;
 }
 
 #IB {
   background-image : url("../Pictures/invspector.png");
   background-position : center;
   background-size : 140%;
+    -moz-background-size : 140%;
   background-repeat : no-repeat;
 }
