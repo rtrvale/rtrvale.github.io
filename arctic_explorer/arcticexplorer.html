@@ -1,0 +1,60 @@
+<html>
+<title>Arctic Explorer</title>
+<meta name="description" content="1980s style text-based strategy game" />
+<head>
+
+<link type="text/css" href="textAdventure.css" rel="stylesheet">
+
+<script type="text/javascript"> 
+
+var prompt ="> "; // the prompt for input
+
+window.onload = function(){
+  // on start
+  document.getElementById("cursor").innerHTML = prompt;
+  initializeGame();
+}
+
+function redraw(event){ 
+  if (event.keyCode===13){
+    // only do something if text is written in inputField and return key is pressed
+	var command = document.getElementById("inputField").value; // command entered by the user
+    document.getElementById("oldCommands").innerHTML += document.getElementById("response").innerHTML;
+	document.getElementById("oldCommands").innerHTML += "<p>" + prompt + command + "</p>";
+	
+	parse(command);
+	
+	var d = document.getElementById("main");
+	if (d.scrollHeight > 500) {
+       d.scrollTop = d.scrollHeight - 500;
+    }
+	
+	document.getElementById("inputField").value = "";
+    //document.getElementById("inputField").reset();
+    document.getElementById("inputField").focus()
+  };  
+};
+
+</script>
+<script src="parser.js"></script>
+<script src="initializeGame.js"></script>
+</head>
+
+<body>
+  <div id = "bannerContainer">
+    <div id="banner">Arctic Explorer</div>
+  </div>
+  <div id="main">
+    <div id="oldCommands">
+	</div>
+	<div id="response">
+    <p>What do you want to do?</p>
+	</div>
+    <div id="inputArea"><div id="cursor"></div><input id="inputField" type="text" autofocus="autofocus" onLoad="document.line.focus();" 
+	onkeyup="redraw(event)" /></div>
+  </div>
+  <div id="debug"></div>
+
+</body>
+
+</html>

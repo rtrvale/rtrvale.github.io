@@ -1,0 +1,79 @@
+#cursor {
+
+  float:left; 
+  margin-right:8px;
+
+  }
+  
+#inputField{
+
+  border:none; 
+  float: left; 
+  margin:0px;
+  font-family: "Courier New", Courier, monospace;
+  width : 80%;
+  display: block;
+
+
+  }
+  
+/* #inputArea {
+
+  position : fixed;
+  bottom : 0;
+  height : 30px;
+
+} */
+  
+body {
+
+  font-family: "Courier New", Courier, monospace;
+  /* overflow : hidden; */
+  margin-top : 0px;
+  
+}
+
+/* #old Commands {
+
+  bottom : 300px;
+  display : block;
+  position: fixed;
+} */
+
+#main {
+
+  position : fixed;
+  bottom : 30px;
+  
+ }
+ 
+#banner {
+
+  font-size : 20px;
+  /* margin : 20 20 20 20; */
+  background-color : skyblue;
+  color : white;
+  clear : both;
+  display : inline-block;
+  position : relative;
+  z-index: 200;
+  padding : 30 30 30 30;
+  margin : 0 auto;
+  
+  }
+  
+#bannerContainer {
+
+  /*font-size : 20px;
+  margin : 20 20 20 20; */
+  background-color : white;
+  color : white;
+  clear : both;
+  display : inline-block;
+  position : absolute;
+  width : 100%;
+  z-index: 199;
+  padding : 20 20 20 20;
+  margin : 0 0 0 0;
+  
+  }
