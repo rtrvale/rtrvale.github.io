@@ -1,3 +1,8 @@
 body {
   font-family : Open Sans, sans-serif;
 }
+
+.expandable {
+   background-color:skyblue;
+   width:150px;
+}
