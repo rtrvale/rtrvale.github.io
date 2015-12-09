@@ -17,6 +17,8 @@ var projectLinks = {"tax" : "Talks/EvasionModel.pdf",
 					"IB" : "pages/IBpages.html",
 					"wordCloud" : "pages/wordcloud2.html"};
 
+var contentIDs = ["research", "other", "statistics", "mathematics"];
+					
 var changeStyle = function(){
   var style = document.getElementById("pageStyle").getAttribute('href');
   if (style == "CSS/stylesheet1.css"){
@@ -26,6 +28,10 @@ var changeStyle = function(){
     for (key in projectLinks){
 	  document.getElementById(key).href = "";
 	}
+	for (var i=0; i<4; i++){
+	  var x = document.getElementById(contentIDs[i]);
+	  x.style.display = "none"; 
+	}
   }
   else {
     style = "CSS/stylesheet1.css";
@@ -34,10 +40,19 @@ var changeStyle = function(){
 	for (key in projectLinks){
 	  document.getElementById(key).href = projectLinks[key];
 	}
+    for (var i=0; i<4; i++){
+	  var x = document.getElementById(contentIDs[i]);
+	  x.style.display = "inline"; 
+	}
   }
   document.getElementById("pageStyle").setAttribute('href', style);
 };
 
+var showContent = function(contentID){
+  var x = document.getElementById(contentID);
+    x.style.display = (x.style.display == "none") ? "inline" : "none"; 
+  };
+  
 </script>
 
 <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
@@ -62,7 +77,7 @@ var changeStyle = function(){
  <h4>
  Contact details
  </h4>
- <b>Email:</b> (initial letter of first name plus first three letters of surname)012@aucklanduni.ac.nz
+ <b>Email:</b> rval012@aucklanduni.ac.nz
   
  <h3>
  Projects
@@ -75,15 +90,29 @@ var changeStyle = function(){
  border:0px; font-family:Verdana;">
  Click here to change to tile view</button>
 </div>
-
-<div class="frontMatter"> 
+<p class="frontMatter">Click section headings below to expand</p>
+<div class="frontMatter expandable" onclick="showContent('research');"> 
  <h4>
  Research
  </h4>
 </div>
  <!-- table of divs -->
  <div class="table">
+  <!-- <div id="research" style="display:none;"> -->
+  <div id="research" style="display:none;">
   <div class="row">
+    <div class="Data">
+	In December 2015, I published a joint paper with Shayne Waldron 
+	<a href="https://www.math.auckland.ac.nz/~waldron/Preprints/G-invariant/JFAAcopy.pdf">The Construction
+	of <i>G</i> - Invariant Finite Tight Frames</a> in <i>Journal of Fourier Analysis and Applications</i>.
+	
+	<ul>
+	 <li><a href="https://www.math.auckland.ac.nz/~waldron/Preprints/G-invariant/JFAAcopy.pdf">Link</a> to author copy of the paper.
+	</ul>
+	</div>
+	
+   <hr>
+	
    <a class="tableData" id="tax" target="new">
     <div class="Data">
 	I wrote a paper <a href="http://papers.ssrn.com/sol3/papers.cfm?abstract_id=2601214">A Model for Tax Evasion with some Realistic Properties</a>. I gave a talk on this paper at the Massey University Applied Mathematics Seminar in Palmerston North on April 30 2015.
@@ -114,6 +143,7 @@ var changeStyle = function(){
 	 </div>
    </a>
   </div>  
+
   <div class="row">
    <a class="tableData newRow" id="GOTvideo" target="new">
      <div class="Data">
@@ -157,68 +187,83 @@ var changeStyle = function(){
 	   </ul>
      </div>
    </a>
-   
-<div class="frontMatter">
+  </div>
+ </div>
+ 
+<div class="frontMatter expandable" onclick="showContent('other');">
  <h4>
  Other
  </h4>
 </div>
-  </div>
-  <div class="row">
-    <a class="tableData newRow" id="wordCloud" target="new">
-     <div class="Data">
-      Recently (2015) I made an experimental word cloud from the text of <i>The Adventures of Sherlock Holmes</i>. Words which occur close together in the text should occur close together in the cloud.
-      <ul>
-        <li><a href="pages/wordcloud2.html">The word cloud</a> (interactive; uses html canvas)
-		<li><a href="https://github.com/rtrvale/WordCloud">The code</a> (a mixture of R and Javascript)
-      </ul>
-     </div>      
-   </a>
+  <div id="other" style="display:none;">
+    <div class="row">
+      <a class="tableData newRow" id="wordCloud" target="new">
+       <div class="Data">
+        Recently (2015) I made an experimental word cloud from the text of <i>The Adventures of Sherlock Holmes</i>. 
+		Words which occur close together in the text should occur close together in the cloud.
+		Conventional word clouds are just a way of showing how many times each word appears, so this is an interesting alternative.
+        <ul>
+          <li><a href="pages/wordcloud2.html">The word cloud</a> (interactive; uses html canvas)
+		  <li><a href="https://github.com/rtrvale/WordCloud">The code</a> (a mixture of R and Javascript)
+        </ul>
+       </div>      
+      </a>
    
    <hr>
    
-   <a class="tableData" id="put" target="new">
+     <a class="tableData" id="put" target="new">
+       <div class="Data">
+	     In 2012 I wrote a Javascript app which plays the 17th century card game Put. For more information about the game, 
+	     see the <a href="http://www.pagat.com/put/put.html">Put page at pagat.com.</a>
+	     <ul>
+	       <li><a href="pages/put.html">Play Put against the computer</a>
+	     </ul>
+	   </div>
+     </a>
      <div class="Data">
-	   In 2012 I wrote a Javascript app which plays the 17th century card game Put. For more information about the game, 
-	   see the <a href="http://www.pagat.com/put/put.html">Put page at pagat.com.</a>
-	   <ul>
-	     <li><a href="pages/put.html">Play Put against the computer</a>
-	   </ul>
-	 </div>
-   </a>
-   <div class="Data">
   
-   </div>
+     </div>
    
    <hr>
    
-   <a class="tableData" id="IB" target="new">
-     <div class="Data">
-       From 2003 - '05, <i>The Inspector Bloodhound Pages</i> is a collection of puzzles which used to be on my website at Glasgow University.	 
-	 <ul>
-      <li><a href="pages/IBpages.html">The Inspector Bloodhound Pages</a>
-     </ul>	  
-	 </div>
-   </a>
-
-  </div> <!-- end of row -->
+     <a class="tableData" id="IB" target="new">
+       <div class="Data">
+         From 2003 - '05, <i>The Inspector Bloodhound Pages</i> is a collection of puzzles which used to be on my website at Glasgow University.	 
+	   <ul>
+        <li><a href="pages/IBpages.html">The Inspector Bloodhound Pages</a>
+       </ul>	  
+	   </div>
+     </a>
+    </div> <!-- end of row -->
+   </div>  <!-- end of "other" section -->
  </div> <!-- end of table --> 
  
 <div class="frontMatter">
 <h3>Lecture Notes and Teaching Materials</h3>
 All files are pdf.
+<div onclick="showContent('statistics');" class="expandable">
 <h4>Statistics</h4>
+</div>
+<div id="statistics" style="display:none;">
 <ul>
  <li><a href="Notes/emth211_stats_notes.pdf">Linear Regression</a> (21 pages) from EMTH211, University of Canterbury 2014
  <li><a href="Notes/Rprimer2.pdf">R Primer</a> (23 pages)
  <li><a href="http://www.math.canterbury.ac.nz/~r.vale/STAT315materials.html">Materials (lectures; assignments with solutions; SAS code)</a> from STAT315: Multivariate Statistics, University of Canterbury 2014
 </ul>
+</div>
+<div onclick="showContent('mathematics');" class="expandable">
 <h4>Mathematics</h4> 
+</div>
+<div id="mathematics" style="display:none;">
+
 <ul>
  <li><a href="Notes/fdalgebras.pdf">MATH7350, Finite-dimensional Algebras</a> (96 pages) from Cornell University, 2009 
  <li><a href="Notes/ada.pdf">MATH7350, Notes on Quasi-free Algebras</a> (51 pages) from Cornell University, 2009
  <li><a href="Notes/agnotes.pdf">Algebraic Geometry</a> from a course by M. Stillman, Cornell University, 2007
 </ul>
+
 </div>
+</div>
+
 </body>
 </html>
