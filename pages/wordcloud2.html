@@ -2191,7 +2191,7 @@ var maxWidth = 5000;
 
 var drawCloud = function(){
  // document.write(keysDown);
-  if (keysDown[107] || keysDown[187]){
+  if (keysDown[107] || keysDown[187] || keysDown[61]){
     if (c.height < maxHeight){
       c.height = Math.floor(c.height*(1 + zoom));
 	  c.width = Math.floor(c.width*(1 + zoom));
@@ -2199,7 +2199,7 @@ var drawCloud = function(){
 	  h = c.height;
 	}
   }
-  if (keysDown[109] || keysDown[189]){
+  if (keysDown[109] || keysDown[189] || keysDown[173){
     c.height *= 1 - zoom;
 	c.width *= 1 - zoom;
 	w = c.width;
