@@ -1,0 +1,355 @@
+<html style="height:100%;">
+<head>
+<title>Simple Russian keyboard</title>
+
+<style>
+table, td, tr {border: 1px solid black; border-collapse: collapse; padding: 5px;}
+</style>
+
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+<script type="text/javascript">
+
+function redraw(event){
+  //if (event.keyCode===80){
+  //  var str = document.getElementById("inputField").value;
+  //  str = str.slice(0, -1) + "п";
+  //  document.getElementById("inputField").value = str;
+  //};
+
+  var upper = event.shiftKey;
+  var newLetter;
+  var wholeText = document.getElementById("inputField").value;
+  var str = wholeText.slice(0, document.getElementById("inputField").selectionStart);
+  var rest = wholeText.slice(document.getElementById("inputField").selectionStart, wholeText.length);
+  var sliceAmount = -1;
+
+  switch(event.keyCode){
+  
+    case 65:
+      var Lastletter = str.slice(-2, -1);
+      //document.getElementById("debug").innerHTML += Lastletter;
+      if (Lastletter == "Ы" | Lastletter == "Y"){
+        newLetter = "Я";
+        sliceAmount = -2;
+      } else if (Lastletter == "ы" | Lastletter == "y") {
+        newLetter = upper ? "Я" : "я";
+        sliceAmount = -2;
+      } else {
+        newLetter = upper ? "А" : "a";
+      }
+    break;
+
+    case 66:
+      newLetter = upper ? "Б" : "б";
+    break;
+
+    case 86:
+      newLetter = !upper ? "в" : "В";
+      if (event.ctrlKey){ newLetter = ""; }
+    break;
+
+    case 71:
+      newLetter = !upper ? "г" : "Г";
+    break;
+
+    case 68:
+      newLetter = !upper ? "д" : "Д";
+    break;
+
+    case 69:
+      var lastLetter = str.slice(-2, -1); 
+      if (lastLetter == "Й"){
+        newLetter = "Э";
+        sliceAmount = -2;
+      } else if (lastLetter == "й"){
+        newLetter = upper ? "Э" : "э";
+        sliceAmount = -2;
+      } else {
+        newLetter = !upper ? "е" : "Е";
+      }
+    break;
+
+    case 90:
+      newLetter = !upper ? "з" : "З";
+    break;
+
+    case 73:
+      newLetter = !upper ? "и" : "И";
+    break;
+
+    case 74:
+      newLetter = !upper ? "й" : "Й";
+    break;
+
+    case 75:
+      newLetter = !upper ? "к" : "К";
+    break;
+
+    case 76:
+      newLetter = !upper ? "л" : "Л";
+    break;
+
+    case 77:
+      newLetter = upper ? "М" : "м";
+    break;
+
+    case 78:
+      newLetter = upper ? "Н" : "н";
+    break;
+
+    case 79:
+      var lastLetter = str.slice(-2, -1);
+      if (lastLetter == "Ы" | lastLetter == "И"){
+        newLetter = "Ё";
+        sliceAmount = -2;
+      } else if (lastLetter == "ы" | lastLetter == "и"){
+        newLetter = upper ? "Ё" : "ё";
+        sliceAmount = -2;
+      } else {
+        newLetter = upper ? "О" : "о";
+      }
+    break;
+
+    case 80:
+      newLetter = upper ? "П" : "п";
+    break;
+
+    case 82:
+      newLetter = upper ? "Р" : "р";
+    break;
+
+    case 83:
+      var lastLetter = str.slice(-2, -1);
+      if (lastLetter == "Т"){
+        newLetter = "Ц";
+        sliceAmount = -2;
+      } else if (lastLetter == "т"){
+        newLetter = upper ? "Ц" : "ц";
+        sliceAmount = -2;
+      } else {
+        newLetter = upper ? "С" : "с";
+      }
+
+    break;
+
+    case 84:
+      newLetter = upper ? "Т" : "т";
+    break;
+
+    case 85:
+      var lastLetter = str.slice(-2, -1);
+      if (lastLetter == "Ы"){
+        newLetter = "Ю";
+        sliceAmount = -2;
+      } else if (lastLetter == "ы"){
+        newLetter = upper ? "Ю" : "ю";
+        sliceAmount = -2;
+      } else {
+        newLetter = upper ? "У" : "у";
+      }
+    break;
+
+    case 89:
+        newLetter = upper ? "Ы" : "ы";
+    break;
+
+    case 70:
+      newLetter = upper ? "Ф" : "ф";
+    break;
+
+    case 72:
+      var Lastletter = str.slice(-2, -1);
+      //document.getElementById("debug").innerHTML += Lastletter;
+      if (Lastletter == "Z" | Lastletter == "З"){
+        newLetter = "Ж";
+        sliceAmount = -2;
+      } else if (Lastletter == "z" | Lastletter == "з"){
+        newLetter = upper ? "Ж" : "ж";
+        sliceAmount = -2;
+      } else if (Lastletter == "K" | Lastletter == "К"){
+        newLetter = "Х";
+        sliceAmount = -2;
+      } else if (Lastletter == "k" | Lastletter == "к"){
+        newLetter = upper ? "Х" : "х";
+        sliceAmount = -2;
+      } else if (Lastletter == "C"){
+        newLetter = "Ч";
+        sliceAmount = -2;
+      } else if (Lastletter == "c"){
+        newLetter = upper ? "Ч" : "ч";
+        sliceAmount = -2;
+      } else if (Lastletter == "С"){
+        newLetter = "Ш";
+        sliceAmount = -2;
+      } else if (Lastletter == "с"){
+        newLetter = upper ? "Ш" : "ш";
+        sliceAmount = -2; 
+      } else {
+        newLetter = "";
+      }
+
+      if (newLetter == "Ч"){
+        if (str.slice(-3, -2) == "Ш" | str.slice(-3, -2) == "ш"){
+          newLetter = "Щ";
+          sliceAmount = -3;
+        }
+      }      
+
+      if (newLetter == "ч"){
+        if (str.slice(-3, -2) == "Ш"){
+          newLetter = "Щ";
+          sliceAmount = -3;
+        } else if (str.slice(-3, -2) == "ш"){
+          newLetter = "щ";
+          sliceAmount = -3;
+        }
+      }      
+       
+       
+    break;
+
+    case 222:
+      var lastLetter = str.slice(-2, -1);
+      if (lastLetter == "Ь"){
+        newLetter = "Ъ";
+        sliceAmount = -2;
+      } else if (lastLetter == "ь"){
+        newLetter = upper ? "Ъ" : "ъ";
+        sliceAmount = -2;
+      } else {
+        newLetter = upper ? "Ь" : "ь";
+      }
+    break;
+
+    case 188:
+      var lastLetter = str.slice(-2, -1);
+      if (lastLetter == "<" && upper){
+        sliceAmount = -2;
+        newLetter = "«";
+      } else {
+        newLetter = "";
+      }
+    break;      
+
+    case 190:
+      var lastLetter = str.slice(-2, -1);
+      if (lastLetter == ">" && upper){
+        sliceAmount = -2;
+        newLetter = "»";
+      } else {
+        newLetter = "";
+      }
+    break; 
+
+    default:
+      newLetter = "";
+      sliceAmount = 0;
+    break;
+
+  };
+
+  if (newLetter != ""){
+    str = str.slice(0, sliceAmount) + newLetter;
+    document.getElementById("inputField").value = str + rest;  
+    document.getElementById("inputField").selectionEnd = str.length;
+  }
+
+
+};
+
+
+</script>
+
+</head>
+<body style="height:100%;">
+
+<div id="description">
+This page allows you to type Russian words phonetically. The keys are:<br>
+<table>
+<tr>
+<td>a</td>
+<td>б</td>
+<td>в</td>
+<td>г</td>
+<td>д</td>
+<td>е</td>
+<td>ё</td>
+<td>ж</td>
+<td>з</td>
+<td>и</td>
+<td>й</td>
+<td>к</td>
+<td>л</td>
+<td>м</td>
+<td>н</td>
+<td>о</td>
+<td>п</td>
+<td>р</td>
+<td>с</td>
+<td>т</td>
+<td>у</td>
+<td>ф</td>
+<td>х</td>
+<td>ц</td>
+<td>ч</td>
+<td>ш</td>
+<td>щ</td>
+<td>ъ</td>
+<td>ы</td>
+<td>ь</td>
+<td>э</td>
+<td>ю</td>
+<td>я</td>
+<td>«</td>
+<td>»</td>
+</tr>
+<tr>
+<td>a</td>
+<td>b</td>
+<td>v</td>
+<td>g</td>
+<td>d</td>
+<td>e</td>
+<td>yo or io</td>
+<td>zh</td>
+<td>z</td>
+<td>i</td>
+<td>j</td>
+<td>k</td>
+<td>l</td>
+<td>m</td>
+<td>n</td>
+<td>o</td>
+<td>p</td>
+<td>r</td>
+<td>s</td>
+<td>t</td>
+<td>u</td>
+<td>f</td>
+<td>kh</td>
+<td>ts</td>
+<td>ch</td>
+<td>sh</td>
+<td>shch</td>
+<td>'' (two apostrophes)</td>
+<td>y</td>
+<td>'</td>
+<td>je</td>
+<td>yu</td>
+<td>ya</td>
+<td>&lt;&lt;</td>
+<td>&gt;&gt;</td>
+</tr>
+</table>
+To type a word like спортсмен, type спортс мен and then delete the space (otherwise тс will turn into ц.)<br>
+Tested in Firefox and Chrome. Does not work in IE. <a href="index.html">Back to my homepage.</a>
+<br>
+<div id="inputArea">
+  <div id="cursor"></div>
+  <textarea cols=50 rows=25 id="inputField" type="text" autofocus="autofocus" onLoad="document.line.focus();" onkeyup="redraw(event)" 
+style="font-size : 15pt; font-family:"Times New Roman", Times, serif; width:100%; height:100%;"></textarea>
+</div>
+<div id="debug"></div>
+
+</body>
+</html>
