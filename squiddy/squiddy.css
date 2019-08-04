@@ -1,0 +1,58 @@
+body, input, button {
+	font-family: 'Press Start 2P', cursive;
+}
+
+button {
+	background-color : black;
+	color : white;
+	cursor : pointer;
+	border: none;
+	padding : 3px 3px 3px 3px;
+}
+
+input {
+	color: blue;
+	border-left : 0px;
+	border-right : 0px;
+	border-top : 0px;
+	border-bottom : 2px solid blue;
+	padding : 3px 3px 3px 3px;
+}
+
+table {
+	border-spacing: 10px 0;
+	border-collapse : separate;
+}
+
+#main {
+	display : flex;
+	flex-direction : column;
+	align-items : center;
+}
+
+#canvas {
+	/*border : 1px solid black;*/
+	width : 500px;
+	height : 300px;
+}
+
+#row {
+	display : flex;
+	flex-direction : row;
+	justify-content : flex-start;
+	width : 500px;
+}
+
+#text-canvas-outer {
+	text-align : center;
+}
+
+#screen {
+	border : 1px solid black;
+	border-radius: 5px;
+	padding : 10px 10px 10px 10px;
+}
+
+.col2 {
+	text-align: right;
+}
