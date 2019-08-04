@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="squiddy.css" />
+</head>
+
+<body>
+
+ <div id="main">
+   <div id="row">
+     <div id="score-box">&nbsp;</div>
+   </div>
+   <div id="screen">
+     <canvas id="canvas"></canvas>
+     <div id="text-canvas-outer">
+       <div id="text-canvas"></div>
+     </div>
+   </div>
+ </div> 
+
+</body>
+<!-- scripts go here -->
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+<script src="https://squiddyhighscores-7f76.restdb.io/assets/js/eventsource.min.js"></script>
+<script src="https://squiddyhighscores-7f76.restdb.io/rest/_jsapi.js"></script>
+
+<script src="globals.js"></script>
+<script src="enemies.js"></script>
+<script src="player.js"></script>
+<script src="entryPoint.js"></script>
+</html>
