@@ -108,7 +108,7 @@ var endGame = function(condition){
 	}
 	canvas.style.display = "none";
 	document.getElementById("score-box").innerHTML="&nbsp;";
-	block.innerHTML += "<br>Refresh page to restart";
+	//block.innerHTML += "<br>Refresh page to restart";
 	GAME_STATE = "over";
     var scores = [];
     for (i=0; i < HS.length; i++){
