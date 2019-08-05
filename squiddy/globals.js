@@ -196,7 +196,7 @@ var addScore = function(){
 
 var printHallofFame = function(HS){
 	var table = document.getElementById("table");
-	var str = "";
+	var str = "Refresh page to restart";
 	str += "<h1 style=\'color : red;\'>HALL OF LEGENDS</h1>";
 	str += "<center><table>";
 	     for (i=0; i < Math.min(10, HS.length);i++){
