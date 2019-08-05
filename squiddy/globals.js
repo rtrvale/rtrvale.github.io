@@ -20,7 +20,7 @@ var enemyMaxSize = canvas.height/2;
 
 var score = 0;
 var GROWTH_FACTOR = 0.01;
-var GULP_FRAMES = 0;
+//var GULP_FRAMES = 0;
 var PLAYER_SPRITE_LEFT = new Image();
 PLAYER_SPRITE_LEFT.src = "squid3.bmp";
 var PLAYER_SPRITE_RIGHT = new Image();
@@ -44,8 +44,8 @@ var renderCanvas = function(){
 	player.move();
 	player.draw();
 	
-	GULP_FRAMES -= 1;
-	if (GULP_FRAMES === 0) player.colour = "black";
+	/*GULP_FRAMES -= 1;
+	if (GULP_FRAMES === 0) player.colour = "black";*/
 	
 	for (i=0; i < enemies.length; i++){
 		enemies[i].update();
@@ -54,8 +54,8 @@ var renderCanvas = function(){
 			enemies[i].remove = true;
 			eat(player, enemies[i], GROWTH_FACTOR);
 			player.colour = "orange";
-			GULP_FRAMES = 5;
-			console.log("ate");
+			//GULP_FRAMES = 5;
+			//console.log("ate");
 			//console.log(score);
 			//cleanUpEnemies();
 		} else if (detectPlayerGotEaten(player, enemies[i])){
@@ -136,6 +136,7 @@ var endGame = function(condition){
 	 }
 };
 
+/*
 var restart = function(){
 	if (KEYSDOWN[32]){
 	  var block = document.getElementById("text-canvas");
@@ -152,6 +153,7 @@ var restart = function(){
 	  score = 0;
 	}
 };
+*/
 
 var mainLoop = function(){
   if (GAME_STATE === "title"){
