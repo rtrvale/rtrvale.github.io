@@ -128,6 +128,7 @@ var endGame = function(condition){
 		"<br><br>Please type your name and then click the Submit button" +
 		"<input type=\'text\' id=\'name\' maxlength=\'18\'></input><button id=\'submit' onclick=\'addScore();\'>Submit</button>" +
 		"<div id=\'table\'></div>";
+	        document.getElementById("name").focus();
 	        timer = setInterval(function(){if (KEYSDOWN[13]){addScore();}}, 20);
 	 } else {
 		 block.innerHTML += "<div id=\'table\'></div>";
