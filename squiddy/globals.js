@@ -136,7 +136,7 @@ var endGame = function(condition){
 	 }
 };
 
-/*
+
 var restart = function(){
 	if (KEYSDOWN[32]){
 	  var block = document.getElementById("text-canvas");
@@ -153,7 +153,7 @@ var restart = function(){
 	  score = 0;
 	}
 };
-*/
+
 
 var mainLoop = function(){
   if (GAME_STATE === "title"){
