@@ -125,9 +125,10 @@ var endGame = function(condition){
      console.log(minScore);
      if (+(score) > minScore){
         block.innerHTML +="<br><br>You have earned a place in the Hall of Legends!" +
-		"<br><br>Please enter your name" +
+		"<br><br>Please type your name and then click the Submit button" +
 		"<input type=\'text\' id=\'name\' maxlength=\'18\'></input><button id=\'submit' onclick=\'addScore();\'>Submit</button>" +
 		"<div id=\'table\'></div>";
+	        timer = setInterval(function(){if (KEYSDOWN[13]){addScore();}}, 20);
 	 } else {
 		 block.innerHTML += "<div id=\'table\'></div>";
 		 printHallofFame(HS);
