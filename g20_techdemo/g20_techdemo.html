@@ -1,0 +1,270 @@
+ <!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src=" https://cdn.jsdelivr.net/npm/mathjs@14.5.2/lib/browser/math.min.js "></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css" />
+        <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
+        <script src="sample_data.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.2.3/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.dataTables.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/d3@7"></script> 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== Base Styles ===== */
+        :root {
+            --primary: #4285F4;  /* Google Blue */
+            --secondary: #34A853; /* Google Green */
+            --background: #f8f9fa;
+            --text: #202124;
+            --text-light: #5f6368;
+            --border: #dadce0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--background);
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            font-weight: 500;
+            color: var(--text);
+        }
+        h1 { font-size: 2rem; }
+        h2 { font-size: 1.5rem; }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+
+        /* ===== Cards ===== */
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* ===== Tables ===== */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 500;
+        }
+        tr:hover { background-color: rgba(66, 133, 244, 0.05); }
+
+        /* ===== Buttons ===== */
+        /* ===== Slider (Range Input) ===== */
+input[type="range"] {
+  -webkit-appearance: none; /* Override default styles */
+  width: 50%;
+  height: 6px;
+  background: #e0e0e0; /* Light gray track */
+  border-radius: 3px;
+  margin: 15px 0;
+  outline: none;
+}
+
+/* Thumb (Handle) */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #4285F4; /* Google Blue */
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* Firefox support */
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #4285F4;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* Track fill (Chrome/Safari) */
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  background: #e0e0e0;
+  border-radius: 3px;
+}
+
+/* Active state */
+input[type="range"]:active::-webkit-slider-thumb {
+  background: #3367d6; /* Darker blue on drag */
+}
+        
+        button {
+            font-family: 'Roboto', sans-serif;
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;            
+        }
+
+        .btn {
+            font-family: 'Roboto', sans-serif;
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .btn:hover {
+            background: #3367d6;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        /* ===== Utility Classes ===== */
+        .text-center { text-align: center; }
+        .text-muted { color: var(--text-light); }
+        .mt-20 { margin-top: 20px; }
+    </style>
+    </head>
+<body>
+<small>Version 1.0 26 June 2025</small>
+<h1>Tech Demo</h1>
+Hello! This is a tech demo for <a href="https://g20.org/g20-media/techsprint-2025-trust-and-integrity-in-scalable-and-open-finance/">
+    the G20 Techsprint 2025
+</a> by <a href="https://datascienceconfidential.github.io/">datascienceconfidential</a>.
+<p>Challenge:
+</p><p>
+<blockquote><i>Credit data portability: improve the ability of small and medium-sized enterprises to access finance through secure, consumer-consented data exchange solutions that facilitate seamless cross-border sharing of credit information.</i></blockquote>
+</p>
+<h2>Proposed Solution</h2>
+<p>
+Facilitate cross-border sharing of credit data by simulating data from
+a statistical model trained on real credit data. Share the simulated
+data across borders instead of the real data. The use of a model ensures
+that no credit data can be leaked. 
+</p>
+<p>
+    The methodology can be used to share credit data between 
+    jurisdictions for modelling or analysis purposes. For example, when a
+    company wants to expand into a new country or region but does not
+    yet have credit risk data for SMEs in that region, they can build
+    a scorecard using data simulated using this method.
+</p>
+<p>
+Once created, the synthetic data can be freely shared, 
+    for example as an email attachment, since no confidential credit information
+    can be leaked. Models can be built using synthetic data like
+    this as an alternative to infrastructure-heavy approaches such as 
+    federated learning.
+</p>
+<h2>Base Data</h2>
+<p>This is an example SME credit risk data set. The real data might have many more columns. The goal of the 
+    project is to create data which has similar statistical properties
+    to the base data but which is completely independent of it.
+</p>
+<table id="example" class="display" width="80%"></table>
+
+<h2>Synthetic Data</h2>
+<button onclick="buttonClick();">Create synthetic data</button>
+<div class="slidecontainer">
+  <input autocomplete="off" style="float:left;" id="slider1" type="range" min="1" max="30" value="1" class="slider" id="myRange" oninput="slide();">
+  <div style="float:left;">&nbsp;Number of rows to generate:&nbsp;</div>
+  <div style="float:left;" id="sliderval">10</div>
+</div>
+<br>
+<p>Synthetic data can be created by clicking the button. The data
+    can be exported as a csv file. This demo does not use the proposed
+    algorithm. It is based on a simpler technique so that it
+    can be served as a static webpage.</p>
+<table id="synthetic" class="display" width="80%"></table>
+<h2>Vizualisation of Typical Results</h2>
+<p>
+The following example images show that the simulated data has similar
+properties to the base data.
+</p>
+<center>
+<h3>Base Data</h3>
+<img src="base_data_pairplot.png" width="60%"/>
+<h3>Synthetic Data</h3>
+<img src="synthetic_data_pairplot.png" width="60%"/>
+</center>
+<p>
+    Workflow to reproduce these results:
+    <ul>
+        <li>Reload the page (this resets the RNG seed)</li>
+        <li>Set the slider to 200</li>
+        <li>Click the button to generate the synthetic data</li>
+        <li>Export both data sets as csv</li>
+    </ul>
+    Now you can analyse the two data sets using a tool of your choice.
+</p>
+<p>
+The graphs were produced in R using the following commands:<br>
+<code style="color:blue;">
+    library(GGally)<br>
+    df1 <- read.csv("export_base_data.csv")<br>
+    df2 <- read.csv("export_demo_synthetic.csv")<br>
+    ggpairs(df1, aes(colour = as.factor(target)))<br>
+    ggpairs(df2, aes(colour = as.factor(target)))
+</code>
+</p>
+<h2>Technical Details</h2>
+<ul>
+    <li>
+        This demo uses a Gaussian copula. The proposed algorithm
+        would use a Vine copula in order to deal more easily with
+        a large number of features. <b>It is key that a parametric statistical model
+        is used (rather than some sort of empirical model) since this
+        prevents data leakage.</b>
+    </li>
+    <li>
+        This demo does not deal with missing values. In the proposed
+        algorithm, missing values would have to be imputed.
+    </li>
+    <li>
+        This demo uses frequency encoding for categorical features.
+        The proposed algorithm will use target encoding.
+    </li>
+    <li>
+        The proposed algorithm will be written in Python rather
+        than JavaScript.
+    </li>
+    <li>
+        Because of the wide variety of SME credit data encountered
+        in practice, it is unlikely that there is a one-size-fits-all 
+        approach to the problem. The algorithm will be designed so that
+        it can easily be adapated to different types of features by
+        a data scientist.
+    </li>
+</ul>
+</body>
+<script src="techdemo_obfuscated.js"></script>
+</html> 
