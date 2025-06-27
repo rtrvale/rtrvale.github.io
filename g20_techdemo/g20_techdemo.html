@@ -1,6 +1,7 @@
  <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src=" https://cdn.jsdelivr.net/npm/mathjs@14.5.2/lib/browser/math.min.js "></script>
         <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css" />
@@ -152,6 +153,64 @@ input[type="range"]:active::-webkit-slider-thumb {
         .text-center { text-align: center; }
         .text-muted { color: var(--text-light); }
         .mt-20 { margin-top: 20px; }
+
+        /* ===== Responsive Slider ===== */
+.slidecontainer {
+  width: 100%;
+  margin: 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; /* Full width on mobile */
+  max-width: 300px; /* Limit width on desktop */
+  height: 8px; /* Thicker for touch */
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  width: 24px; /* Larger thumb */
+  height: 24px;
+}
+
+/* Touch-friendly labels */
+#sliderval {
+  font-size: 1.1rem;
+  min-width: 30px; /* Prevent layout shift */
+}
+
+/* ===== Mobile Tables ===== */
+table.dataTable {
+  font-size: 14px; /* Smaller text */
+}
+
+.dataTables_wrapper .dataTables_info {
+  padding-top: 0.5em !important; /* Compact footer */
+}
+
+.dataTables_scrollBody {
+  border: none !important; /* Cleaner look */
+}
+
+/* Stack buttons vertically on mobile */
+@media (max-width: 768px) {
+  .dt-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* ===== Images ===== */
+img {
+  max-width: 100%;
+  height: auto; /* Prevent distortion */
+  display: block;
+  margin: 0 auto;
+}
     </style>
     </head>
 <body>
@@ -199,12 +258,12 @@ Once created, the synthetic data can be freely shared,
   <div style="float:left;">&nbsp;Number of rows to generate:&nbsp;</div>
   <div style="float:left;" id="sliderval">10</div>
 </div>
+<table id="synthetic" class="display" width="80%"></table>
 <br>
 <p>Synthetic data can be created by clicking the button. The data
     can be exported as a csv file. This demo does not use the proposed
     algorithm. It is based on a simpler technique so that it
     can be served as a static webpage.</p>
-<table id="synthetic" class="display" width="80%"></table>
 <h2>Vizualisation of Typical Results</h2>
 <p>
 The following example images show that the simulated data has similar
@@ -266,5 +325,5 @@ The graphs were produced in R using the following commands:<br>
     </li>
 </ul>
 </body>
-<script src="techdemo_obfuscated.js"></script>
+<script src="techdemo.js"></script>
 </html> 
