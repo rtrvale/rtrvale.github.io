@@ -190,6 +190,8 @@
     #start-new-game-purple  { background: #7c3aed; color: #fff; }
     #start-new-game-brown   { background: #92400e; color: #fff; }
 
+    #rules-btn   { background: #0e9268; color: #fff; }
+
     @media (max-width: 480px) {
       body {
         padding: 8px 10px;
@@ -242,6 +244,15 @@
       <button id="start-new-game-brown">New Game as Brown</button>
     </div>
   </div>
+  <button id="rules-btn">Game rules</button>
+  <div id="rules">This page allows you to play <a href='https://boardgamegeek.com/thread/3247659/wip-buffalo-buffalo-buffalo-buffalo-buffalo-compon'>
+      Buffalo Buffalo Buffalo Buffalo Buffalo</a>, winner of the <a href="https://boardgamegeek.com/thread/3226918/2024-children-and-family-game-design-contest">
+        2024 Children and Families Board Game Design Contest</a> on boardgamegeek.com. To start a 
+    new game, press one of the new game buttons. On your turn, click Roll Dice to roll three dice. You may then select columns in which your buffaloes
+  will move. The selected columns must match your dice, but dice can be combined to give higher numbers. You can select a column up to three times. Click on it a 
+  fourth time to "unselect" it. If your selection is legal, you will be able to
+click the Confirm button to proceed with your turn. Brown always moves first, and the game continues until a buffalo is pushed off. The player whose 
+buffalo is pushed off first loses. That's all!<br><br>(Click "Game Rules" again to hide this description.)</div>
 
   <!-- Grid setup — runs before interaction.js so the DOM is ready -->
   <script>
@@ -375,6 +386,15 @@
 
     document.getElementById("start-new-game-purple").onclick = function(){ startNewGameAsPurple(); };
     document.getElementById("start-new-game-brown").onclick  = function(){ startNewGameAsBrown(); };
+
+    document.getElementById("rules").style.display = "none";
+
+    var revealRules = function(){
+      var elt = document.getElementById("rules");
+      elt.style.display = (elt.style.display == "block") ? "none" : "block";
+    } 
+
+    document.getElementById("rules-btn").onclick = function(){revealRules();};
   </script>
 
 </body>
