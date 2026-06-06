@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buffalo</title>
+  <script src="buffalo.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0f172a;
+      color: #e2e8f0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+      gap: 20px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #f8fafc;
+      text-shadow: 0 0 24px rgba(168, 85, 247, 0.5);
+    }
+
+    /* ── Board ── */
+    #board-wrapper {
+      background: #2d6a4f;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+      max-width: 440px;
+      width: 100%;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(11, 1fr);
+      gap: 2px;
+      background: #52b788;
+      width: 100%;
+    }
+
+    .grid-item {
+      aspect-ratio: 1 / 1;
+      min-width: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0;
+    }
+
+    /* Inner 8×8 playing area */
+    .game-cell {
+      background: #e8d5b7;
+      cursor: pointer;
+      transition: background-color 0.12s;
+    }
+
+    .game-cell:hover {
+      background: #f5e8d0;
+    }
+
+    /* Outer ring (row 9 / col 9) — starting positions, transparent background */
+    .outer-cell {
+      background: transparent;
+    }
+
+    /* Row/col selection indicators (col 0 and row 0) */
+    .indicator-cell {
+      background: #2d6a4f;
+      color: #b7e4c7;
+      font-size: 0.55em;
+      font-weight: 700;
+    }
+
+    .label-cell {
+      background: transparent;
+      color: #b7e4c7;
+      font-size: 0.62em;
+      font-weight: 600;
+    }
+
+    .invisible-cell {
+      background: transparent;
+    }
+
+    /* Emoji sizing for all playable cells */
+    .game-cell, .outer-cell {
+      font-size: 1.4em;
+    }
+
+    /* Piece tokens — em-sized circles so fontSize:'0' hides them during animation */
+    .piece {
+      width: 0.78em;
+      height: 0.78em;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .p-piece { background: #6d28d9; }
+    .b-piece { background: #92400e; }
+
+    /* ── Controls ── */
+    #controls {
+      max-width: 440px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .status-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 52px;
+    }
+
+    #roll-result {
+      font-size: 1.05em;
+      font-weight: 700;
+      color: #fbbf24;
+      letter-spacing: 0.05em;
+    }
+
+    #winner {
+      font-size: 1.15em;
+      font-weight: 700;
+      color: #fbbf24;
+    }
+
+    #opponent-turn-description {
+      color: #94a3b8;
+      font-size: 0.9em;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    button {
+      padding: 9px 18px;
+      border: none;
+      border-radius: 6px;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.88em;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s, box-shadow 0.15s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    button:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none;
+    }
+
+    button:not(:disabled):hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    }
+
+    button:not(:disabled):active {
+      transform: translateY(0);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    #roll-button            { background: #16a34a; color: #fff; }
+    #confirm-button         { background: #2563eb; color: #fff; }
+    #opponent-turn          { background: #475569; color: #fff; }
+    #confirm-opponent-turn  { background: #475569; color: #fff; }
+    #start-new-game-purple  { background: #7c3aed; color: #fff; }
+    #start-new-game-brown   { background: #92400e; color: #fff; }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 8px 10px;
+        gap: 8px;
+      }
+      h1 {
+        font-size: 1.2rem;
+        letter-spacing: 0.1em;
+      }
+      #board-wrapper {
+        padding: 5px;
+      }
+      .status-card {
+        min-height: 32px;
+        padding: 6px 10px;
+        gap: 3px;
+      }
+      #controls {
+        gap: 6px;
+      }
+      button {
+        padding: 7px 11px;
+        font-size: 0.82em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- <h1>Buffalo</h1> -->
+
+  <div id="board-wrapper">
+    <div class="grid-container" id="grid"></div>
+  </div>
+
+  <div id="controls">
+    <div class="status-card">
+      <div id="roll-result"></div>
+      <div id="winner"></div>
+      <div id="opponent-turn-description"></div>
+    </div>
+    <div class="btn-row">
+      <button id="roll-button">Roll Dice</button>
+      <button id="confirm-button">Confirm</button>
+      <button id="opponent-turn">Opponent Turn</button>
+      <button id="confirm-opponent-turn">OK</button>
+    </div>
+    <div class="btn-row">
+      <button id="start-new-game-purple">New Game as Purple</button>
+      <button id="start-new-game-brown">New Game as Brown</button>
+    </div>
+  </div>
+
+  <!-- Grid setup — runs before interaction.js so the DOM is ready -->
+  <script>
+    var grid = document.getElementById("grid");
+    for (var i = 0; i < 11; i++){
+        for (var j = 0; j < 11; j++){
+            var newDiv = document.createElement("div");
+            newDiv.className = "grid-item";
+            newDiv.id = String(i) + ":" + String(j);
+            grid.appendChild(newDiv);
+        }
+    }
+
+    // Column labels (row 10) and row labels (col 10)
+    for (var k = 1; k < 9; k++){
+        var colLabel = document.getElementById("10:" + String(k));
+        colLabel.innerHTML = String(k);
+        colLabel.classList.add("label-cell");
+
+        var rowLabel = document.getElementById(String(9-k) + ":10");
+        rowLabel.innerHTML = String(k);
+        rowLabel.classList.add("label-cell");
+    }
+
+    // Inner 8×8 playing area
+    for (var i = 1; i < 9; i++){
+        for (var j = 1; j < 9; j++){
+            document.getElementById(String(i) + ":" + String(j)).classList.add("game-cell");
+        }
+    }
+
+    // Outer ring: row 9 cols 1-9 and rows 1-8 col 9 (starting positions)
+    for (var k = 1; k < 10; k++){
+        document.getElementById("9:" + String(k)).classList.add("outer-cell");
+        document.getElementById(String(k) + ":9").classList.add("outer-cell");
+    }
+
+    // Indicator cells: col 0 rows 1-8 (row selection) and row 0 cols 1-8 (col selection)
+    for (var k = 1; k < 9; k++){
+        document.getElementById(String(k) + ":0").classList.add("indicator-cell");
+        document.getElementById("0:" + String(k)).classList.add("indicator-cell");
+    }
+
+    // Everything else invisible
+    for (var i = 0; i <= 10; i++){
+        for (var j = 0; j <= 10; j++){
+            var el = document.getElementById(String(i) + ":" + String(j));
+            var hasClass = el.classList.contains("game-cell")
+                        || el.classList.contains("outer-cell")
+                        || el.classList.contains("indicator-cell")
+                        || el.classList.contains("label-cell");
+            if (!hasClass){
+                el.classList.add("invisible-cell");
+                el.innerHTML = "";
+            }
+        }
+    }
+
+    // Initial button states — interaction.js may override these
+    document.getElementById("confirm-button").disabled = true;
+    document.getElementById("confirm-opponent-turn").disabled = true;
+    document.getElementById("opponent-turn").disabled = true;
+    document.getElementById("roll-button").disabled = true;
+  </script>
+
+  <script src="interaction.js"></script>
+  <script src="animation.js"></script>
+  <script src="confirmSelection_animated.js"></script>
+  <script src="logic.js"></script>
+  <script>
+    // Override drawBoard — pieces rendered as coloured circle tokens.
+    var drawBoard = function(state){
+        for (var i = 1; i <= 9; i++){
+            for (var j = 1; j <= 9; j++){
+                var cell = document.getElementById(String(i) + ":" + String(j));
+                var piece = state.board[i-1][j-1];
+                if (piece === "p"){
+                    cell.innerHTML = '<div class="piece p-piece"></div>';
+                } else if (piece === "b"){
+                    cell.innerHTML = '<div class="piece b-piece"></div>';
+                } else {
+                    cell.innerHTML = "";
+                }
+                cell.dataset.piece = piece || "";
+            }
+        }
+    };
+
+    // Override makePieceOverlay — content is either the piece div HTML (normal moves)
+    // or "p"/"b" (pushed-off pieces).
+    var makePieceOverlay = function(content, rect){
+        var overlay = document.createElement("div");
+        if (content === "p" || content === "b"){
+            overlay.innerHTML = '<div class="piece ' + content + '-piece"></div>';
+        } else {
+            overlay.innerHTML = content;
+        }
+        overlay.style.position       = "fixed";
+        overlay.style.left           = rect.left   + "px";
+        overlay.style.top            = rect.top    + "px";
+        overlay.style.width          = rect.width  + "px";
+        overlay.style.height         = rect.height + "px";
+        overlay.style.margin         = "0";
+        overlay.style.display        = "flex";
+        overlay.style.justifyContent = "center";
+        overlay.style.alignItems     = "center";
+        overlay.style.fontSize       = "1.4em";
+        overlay.style.zIndex         = "1000";
+        overlay.style.pointerEvents  = "none";
+        return overlay;
+    };
+
+    // Re-draw with the new drawBoard so data-piece attributes are set
+    drawBoard(state);
+
+    // Cell click handlers
+    for (let i = 1; i < 9; i++){
+        for (let j = 1; j < 9; j++){
+            var cell = document.getElementById(String(i) + ":" + String(j));
+            if (state.player === "purple"){
+                cell.onclick = function(){ select_row(9-i); };
+            } else {
+                cell.onclick = function(){ select_col(j); };
+            }
+        }
+    }
+    // Clear any text left in the row-counter column
+    for (let i = 1; i < 9; i++){
+        document.getElementById(String(i) + ":0").innerHTML = "";
+    }
+
+    document.getElementById("start-new-game-purple").onclick = function(){ startNewGameAsPurple(); };
+    document.getElementById("start-new-game-brown").onclick  = function(){ startNewGameAsBrown(); };
+  </script>
+
+</body>
+</html>

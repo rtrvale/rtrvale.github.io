@@ -1,0 +1,35 @@
+
+/* The outer container holding the grid */
+.grid-container {
+    display: grid;
+    /* Creates 4 columns of equal width */
+    grid-template-columns: repeat(11, 1fr); 
+    /* Spacing between the square items */
+    gap: 1px; 
+    /* Limits maximum layout width on large screens */
+    max-width: 400px; 
+    margin: 20px auto;
+    padding: 10px;
+}
+
+/* Individual items in the grid */
+.grid-item {
+    /* Forces height to match width perfectly */
+    aspect-ratio: 1 / 1; 
+    /*background-color: #3498db;*/
+    color: black;
+    border-radius: 0px;
+    border: 1px solid black;
+    min-width: 0;
+    
+    /* Optional: Centers any text inside the square */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.invisible-grid-item {
+    border: 0px;
+}
